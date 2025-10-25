@@ -412,6 +412,18 @@
       .video-card { width: 100%; }
       .nickname { font-size: 26px; }
     }
+
+    .verified-badge {
+      display: inline-block;
+      width: 18px;
+      height: 18px;
+      margin-left: 6px;
+      background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%231d9bf0'%3E%3Cpath d='M9 12.75l3.5 3.5 7-7' stroke='%23fff' stroke-width='2' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3Ccircle cx='12' cy='12' r='10' fill='none' stroke='%231d9bf0' stroke-width='2'/%3E%3C/svg%3E") no-repeat center center;
+      background-size: contain;
+      vertical-align: middle;
+      position: relative;
+      top: -1px;
+    }
   </style>
 </head>
 <body>
@@ -425,7 +437,10 @@
   <div class="container">
     <div class="profile fade-in delay-1">
       <img src="https://vzge.me/face/1000/urqiui" alt="urliui" class="avatar">
-      <h1 class="nickname">urliui</h1>
+      <h1 class="nickname">
+        urliui
+        <span class="verified-badge" title="Verified profile"></span>
+      </h1>
       <div class="badges">
         <span class="badge">#urliui</span>
         <span class="badge">#лап</span>
