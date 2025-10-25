@@ -412,6 +412,45 @@
       .video-card { width: 100%; }
       .nickname { font-size: 26px; }
     }
+
+    /* Кастомный ползунок прокрутки */
+    ::-webkit-scrollbar {
+      width: 10px;
+      height: 10px;
+    }
+    
+    ::-webkit-scrollbar-track {
+      background: transparent;
+    }
+    
+    ::-webkit-scrollbar-thumb {
+      background: rgba(108, 92, 231, 0.25); /* var(--accent) с прозрачностью */
+      border-radius: 10px;
+      border: 2px solid transparent;
+      background-clip: content-box;
+      transition: background 0.25s ease;
+    }
+    
+    ::-webkit-scrollbar-thumb:hover {
+      background: rgba(108, 92, 231, 0.45);
+    }
+    
+    /* Для горизонтального скролла (если понадобится) */
+    ::-webkit-scrollbar-corner {
+      background: transparent;
+    }
+    
+    /* Кастомное выделение текста */
+    ::selection {
+      background: rgba(108, 92, 231, 0.3);
+      color: #ffffff;
+    }
+    
+    /* Для Firefox */
+    ::-moz-selection {
+      background: rgba(108, 92, 231, 0.3);
+      color: #ffffff;
+    }
   </style>
 </head>
 <body>
