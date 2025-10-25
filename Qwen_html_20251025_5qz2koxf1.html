@@ -1,0 +1,484 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>urliui — Portfolio</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/tsparticles@2.12.0/tsparticles.bundle.min.js"></script>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    :root {
+      --bg: #0d0d0f;
+      --surface: #141418;
+      --border: #25252d;
+      --text: #e6e6f0;
+      --text-secondary: #a0a0b0;
+      --accent: #6c5ce7;
+      --accent-hover: #7d6bff;
+      --radius: 12px;
+    }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Inter', system-ui, sans-serif;
+      font-weight: 400;
+      line-height: 1.6;
+      min-height: 100vh;
+      overflow-x: hidden;
+      position: relative;
+    }
+
+    #tsparticles {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: -1;
+      backdrop-filter: blur(1px);
+    }
+
+    .container {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 60px 24px 80px;
+      position: relative;
+      z-index: 2;
+    }
+
+    /* Анимация появления при загрузке */
+    .fade-in {
+      opacity: 0;
+      transform: translateY(15px);
+      animation: fadeIn 0.8s forwards;
+    }
+
+    @keyframes fadeIn {
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .delay-1 { animation-delay: 0.1s; }
+    .delay-2 { animation-delay: 0.2s; }
+    .delay-3 { animation-delay: 0.3s; }
+    .delay-4 { animation-delay: 0.4s; }
+    .delay-5 { animation-delay: 0.5s; }
+
+    /* Общие отступы */
+    .section {
+      margin-bottom: 70px;
+    }
+
+    .section-title {
+      font-size: 20px;
+      font-weight: 600;
+      margin-bottom: 24px;
+      color: var(--accent);
+      text-align: center;
+    }
+
+    /* Профиль */
+    .profile {
+      text-align: center;
+      margin-bottom: 60px;
+    }
+
+    .avatar {
+      width: 120px;
+      height: 120px;
+      border-radius: 50%;
+      object-fit: cover;
+      margin-bottom: 20px;
+      border: 2px solid var(--border);
+      transition: border-color 0.3s;
+    }
+
+    .avatar:hover {
+      border-color: var(--accent);
+    }
+
+    .nickname {
+      font-size: 32px;
+      font-weight: 700;
+      margin-bottom: 12px;
+    }
+
+    .bio {
+      font-size: 17px;
+      color: var(--text-secondary);
+      max-width: 600px;
+      margin: 0 auto;
+    }
+
+    /* Соцсети */
+    .socials {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 20px;
+      margin-bottom: 50px;
+    }
+
+    .social-link {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 12px 20px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      text-decoration: none;
+      color: var(--text);
+      font-weight: 500;
+      font-size: 15px;
+      transition: all 0.25s ease;
+    }
+
+    .social-link:hover {
+      border-color: var(--accent);
+      color: var(--accent-hover);
+      transform: translateY(-2px);
+    }
+
+    .social-icon {
+      width: 20px;
+      height: 20px;
+      filter: invert(85%) sepia(10%) saturate(10%) hue-rotate(180deg);
+    }
+
+    /* Бесконечная галерея скриншотов */
+    .screenshots {
+      overflow: hidden;
+      margin: 0 auto;
+      width: 100%;
+    }
+
+    .screenshots-track {
+      display: flex;
+      width: max-content;
+      animation: scroll 30s linear infinite;
+    }
+
+    .screenshots-track:hover {
+      animation-play-state: paused;
+    }
+
+    .screenshot-item {
+      width: 220px;
+      height: 130px;
+      margin: 0 14px;
+      border-radius: 8px;
+      object-fit: cover;
+      flex-shrink: 0;
+      border: 1px solid var(--border);
+      cursor: pointer;
+      transition: transform 0.2s, border-color 0.2s;
+    }
+
+    .screenshot-item:hover {
+      border-color: var(--accent);
+      transform: scale(1.02);
+    }
+
+    @keyframes scroll {
+      0% { transform: translateX(0); }
+      100% { transform: translateX(-50%); }
+    }
+
+    /* YouTube видео с превью */
+    .videos {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 24px;
+      justify-content: center;
+    }
+
+    .video-card {
+      width: 260px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      overflow: hidden;
+      text-decoration: none;
+      color: inherit;
+      transition: all 0.25s;
+    }
+
+    .video-card:hover {
+      border-color: var(--accent);
+      transform: translateY(-3px);
+    }
+
+    .video-thumb {
+      width: 100%;
+      height: 145px;
+      object-fit: cover;
+      display: block;
+    }
+
+    .video-title {
+      padding: 14px;
+      font-size: 15px;
+      font-weight: 500;
+      line-height: 1.4;
+    }
+
+    /* Проекты с баннером */
+    .projects {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+      gap: 24px;
+    }
+
+    .project-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      overflow: hidden;
+      text-decoration: none;
+      color: inherit;
+      transition: all 0.3s;
+    }
+
+    .project-card:hover {
+      border-color: var(--accent);
+      transform: translateY(-3px);
+    }
+
+    .project-banner {
+      width: 100%;
+      height: 120px;
+      object-fit: cover;
+      display: block;
+    }
+
+    .project-info {
+      padding: 16px;
+    }
+
+    .project-name {
+      font-weight: 600;
+      font-size: 17px;
+      margin-bottom: 8px;
+    }
+
+    .project-desc {
+      font-size: 14px;
+      color: var(--text-secondary);
+      line-height: 1.5;
+    }
+
+    /* Футер */
+    footer {
+      text-align: center;
+      padding-top: 40px;
+      font-size: 14px;
+      color: var(--text-secondary);
+      border-top: 1px solid var(--border);
+    }
+
+    @media (max-width: 600px) {
+      .screenshot-item { width: 180px; height: 105px; }
+      .video-card { width: 100%; }
+      .nickname { font-size: 26px; }
+    }
+  </style>
+</head>
+<body>
+  <div id="tsparticles"></div>
+
+  <div class="container">
+    <!-- Профиль -->
+    <div class="profile fade-in delay-1">
+      <img src="https://yt3.googleusercontent.com/ytc/APkj04fK1V4KzD1K1lJ2y6v6Xe9J3nVJZQhU7xQ5JvQq=s176-c-k-c0x00ffffff-no-rj" alt="urliui" class="avatar">
+      <h1 class="nickname">urliui</h1>
+      <p class="bio">Разработчик, создатель контента и исследователь технологий.</p>
+    </div>
+
+    <!-- Соцсети -->
+    <div class="section fade-in delay-2">
+      <h2 class="section-title">Связь</h2>
+      <div class="socials">
+        <a href="https://youtube.com/@urliui" class="social-link" target="_blank" rel="noopener">
+          <img src="https://cdn-icons-png.flaticon.com/512/187/187209.png" class="social-icon" alt="YouTube">
+          YouTube
+        </a>
+        <a href="https://github.com/urliui" class="social-link" target="_blank" rel="noopener">
+          <img src="https://cdn-icons-png.flaticon.com/512/25/25231.png" class="social-icon" alt="GitHub">
+          GitHub
+        </a>
+        <a href="https://t.me/urliui" class="social-link" target="_blank" rel="noopener">
+          <img src="https://cdn-icons-png.flaticon.com/512/2111/2111646.png" class="social-icon" alt="Telegram">
+          Telegram
+        </a>
+      </div>
+    </div>
+
+    <!-- Скриншоты (бесконечная прокрутка) -->
+    <div class="section fade-in delay-3">
+      <h2 class="section-title">Скриншоты</h2>
+      <div class="screenshots">
+        <div class="screenshots-track" id="screenshots-track"></div>
+      </div>
+    </div>
+
+    <!-- YouTube видео -->
+    <div class="section fade-in delay-4">
+      <h2 class="section-title">Видео на YouTube</h2>
+      <div class="videos" id="videos-container"></div>
+    </div>
+
+    <!-- Проекты -->
+    <div class="section fade-in delay-5">
+      <h2 class="section-title">Проекты</h2>
+      <div class="projects" id="projects-container"></div>
+    </div>
+
+    <!-- Футер -->
+    <footer>&copy; 2025 urliui</footer>
+  </div>
+
+  <script>
+    // === Данные ===
+    const DATA = {
+      // Скриншоты (для бесконечной прокрутки)
+      screenshots: [
+        "https://via.placeholder.com/400x240/1e1e25/ffffff?text=Dashboard",
+        "https://via.placeholder.com/400x240/252530/ffffff?text=Game+UI",
+        "https://via.placeholder.com/400x240/2a2a35/ffffff?text=Mobile+App",
+        "https://via.placeholder.com/400x240/30303a/ffffff?text=Analytics",
+        "https://via.placeholder.com/400x240/353540/ffffff?text=Editor",
+        "https://via.placeholder.com/400x240/3a3a45/ffffff?text=Platform"
+      ],
+      // Видео с YouTube (вручную)
+      youtubeVideos: [
+        {
+          title: "Как я создаю портфолио за 1 час",
+          url: "https://www.youtube.com/watch?v=abc123",
+          videoId: "abc123"
+        },
+        {
+          title: "Топ-5 инструментов разработчика 2025",
+          url: "https://www.youtube.com/watch?v=def456",
+          videoId: "def456"
+        },
+        {
+          title: "Анимации в вебе без библиотек",
+          url: "https://www.youtube.com/watch?v=ghi789",
+          videoId: "ghi789"
+        },
+        {
+          title: "Мой workflow в VS Code",
+          url: "https://www.youtube.com/watch?v=jkl012",
+          videoId: "jkl012"
+        }
+      ],
+      // Проекты
+      projects: [
+        {
+          name: "Particles Portfolio",
+          desc: "Современное портфолио с анимированным фоном.",
+          banner: "https://via.placeholder.com/600x300/1e1e25/6c5ce7?text=Portfolio",
+          url: "https://github.com/urliui/particles-portfolio"
+        },
+        {
+          name: "Minimal CLI Tools",
+          desc: "Набор утилит командной строки.",
+          banner: "https://via.placeholder.com/600x300/252530/6c5ce7?text=CLI+Tools",
+          url: "https://github.com/urliui/minimal-cli"
+        },
+        {
+          name: "Dark UI Kit",
+          desc: "Коллекция компонентов для тёмных интерфейсов.",
+          banner: "https://via.placeholder.com/600x300/2a2a35/6c5ce7?text=UI+Kit",
+          url: "https://github.com/urliui/dark-ui-kit"
+        }
+      ]
+    };
+
+    // === Скриншоты: бесконечная прокрутка ===
+    const track = document.getElementById('screenshots-track');
+    const doubled = [...DATA.screenshots, ...DATA.screenshots];
+    doubled.forEach(url => {
+      const img = document.createElement('img');
+      img.src = url;
+      img.className = 'screenshot-item';
+      img.alt = "Скриншот";
+      track.appendChild(img);
+    });
+
+    // === YouTube видео с превью ===
+    const videosContainer = document.getElementById('videos-container');
+    DATA.youtubeVideos.forEach(video => {
+      const thumb = `https://i.ytimg.com/vi/${video.videoId}/mqdefault.jpg`;
+      const card = document.createElement('a');
+      card.href = video.url;
+      card.className = 'video-card';
+      card.target = '_blank';
+      card.rel = 'noopener';
+      card.innerHTML = `
+        <img src="${thumb}" class="video-thumb" alt="${video.title}">
+        <div class="video-title">${video.title}</div>
+      `;
+      videosContainer.appendChild(card);
+    });
+
+    // === Проекты ===
+    const projectsContainer = document.getElementById('projects-container');
+    DATA.projects.forEach(proj => {
+      const card = document.createElement('a');
+      card.href = proj.url;
+      card.className = 'project-card';
+      card.target = '_blank';
+      card.rel = 'noopener';
+      card.innerHTML = `
+        <img src="${proj.banner}" class="project-banner" alt="${proj.name}">
+        <div class="project-info">
+          <div class="project-name">${proj.name}</div>
+          <div class="project-desc">${proj.desc}</div>
+        </div>
+      `;
+      projectsContainer.appendChild(card);
+    });
+
+    // === Частицы ===
+    tsParticles.load("tsparticles", {
+      fpsLimit: 60,
+      particles: {
+        number: { value: 50 },
+        color: { value: "#6c5ce7" },
+        shape: { type: "circle" },
+        opacity: { value: 0.2, random: true },
+        size: { value: { min: 1, max: 3 } },
+        move: {
+          enable: true,
+          speed: 0.8,
+          direction: "none",
+          random: true,
+          straight: false
+        }
+      },
+      interactivity: {
+        detectsOn: "canvas",
+        events: {
+          onHover: { enable: true, mode: "repulse" },
+          resize: true
+        }
+      },
+      detectRetina: true,
+      background: { color: "#0d0d0f" }
+    });
+  </script>
+</body>
+</html>
