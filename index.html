@@ -55,7 +55,6 @@
       z-index: 2;
     }
 
-    /* Анимация появления при загрузке */
     .fade-in {
       opacity: 0;
       transform: translateY(15px);
@@ -75,7 +74,6 @@
     .delay-4 { animation-delay: 0.4s; }
     .delay-5 { animation-delay: 0.5s; }
 
-    /* Общие отступы */
     .section {
       margin-bottom: 70px;
     }
@@ -97,7 +95,7 @@
     .avatar {
       width: 120px;
       height: 120px;
-      border-radius: 50%;
+      border-radius: 12px; /* ← не круг, а скруглённый квадрат */
       object-fit: cover;
       margin-bottom: 20px;
       border: 1px solid var(--border);
@@ -121,7 +119,7 @@
       margin: 0 auto;
     }
 
-    /* Соцсети */
+    /* Соцсети с градиентом */
     .socials {
       display: flex;
       justify-content: center;
@@ -135,18 +133,35 @@
       align-items: center;
       gap: 10px;
       padding: 12px 20px;
-      background: var(--surface);
-      border: 1px solid var(--border);
       border-radius: var(--radius);
       text-decoration: none;
       color: var(--text);
       font-weight: 500;
       font-size: 15px;
       transition: all 0.25s ease;
+      position: relative;
+      overflow: hidden;
+      border: none;
+    }
+
+    .social-link::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: radial-gradient(circle at bottom, var(--accent), transparent 70%);
+      opacity: 0.15;
+      z-index: 0;
+    }
+
+    .social-link span {
+      position: relative;
+      z-index: 1;
     }
 
     .social-link:hover {
-      border-color: var(--accent);
       color: var(--accent-hover);
       transform: translateY(-2px);
     }
@@ -155,9 +170,11 @@
       width: 20px;
       height: 20px;
       filter: invert(85%) sepia(10%) saturate(10%) hue-rotate(180deg);
+      position: relative;
+      z-index: 1;
     }
 
-    /* Бесконечная галерея скриншотов */
+    /* Скриншоты */
     .screenshots {
       overflow: hidden;
       margin: 0 auto;
@@ -196,7 +213,7 @@
       100% { transform: translateX(-50%); }
     }
 
-    /* YouTube видео с превью */
+    /* Видео */
     .videos {
       display: flex;
       flex-wrap: wrap;
@@ -234,7 +251,7 @@
       line-height: 1.4;
     }
 
-    /* Проекты с баннером */
+    /* Проекты */
     .projects {
       display: grid;
       grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
@@ -279,7 +296,6 @@
       line-height: 1.5;
     }
 
-    /* Футер */
     footer {
       text-align: center;
       padding-top: 40px;
@@ -299,33 +315,30 @@
   <div id="tsparticles"></div>
 
   <div class="container">
-    <!-- Профиль -->
     <div class="profile fade-in delay-1">
       <img src="https://vzge.me/face/1000/uertyk_" alt="urliui" class="avatar">
       <h1 class="nickname">urliui</h1>
       <p class="bio">Привет! Я - Юрли. Ютубер, дизайнер, фронтендер, ну и просто душевный друг :3</p>
     </div>
 
-    <!-- Соцсети -->
     <div class="section fade-in delay-2">
       <h2 class="section-title">Соц. сети</h2>
       <div class="socials">
         <a href="https://www.youtube.com/@urliui" class="social-link" target="_blank" rel="noopener">
           <img src="https://cdn-icons-png.flaticon.com/512/187/187209.png" class="social-icon" alt="YouTube">
-          YouTube
+          <span>YouTube</span>
         </a>
         <a href="https://github.com/urliui" class="social-link" target="_blank" rel="noopener">
           <img src="https://cdn-icons-png.flaticon.com/512/25/25231.png" class="social-icon" alt="GitHub">
-          GitHub
+          <span>GitHub</span>
         </a>
         <a href="https://t.me/urliuiq" class="social-link" target="_blank" rel="noopener">
           <img src="https://cdn-icons-png.flaticon.com/512/2111/2111646.png" class="social-icon" alt="Telegram">
-          Telegram
+          <span>Telegram</span>
         </a>
       </div>
     </div>
 
-    <!-- Скриншоты (бесконечная прокрутка) -->
     <div class="section fade-in delay-3">
       <h2 class="section-title">Скриншоты</h2>
       <div class="screenshots">
@@ -333,26 +346,21 @@
       </div>
     </div>
 
-    <!-- YouTube видео -->
     <div class="section fade-in delay-4">
       <h2 class="section-title">Видео на YouTube</h2>
       <div class="videos" id="videos-container"></div>
     </div>
 
-    <!-- Проекты -->
     <div class="section fade-in delay-5">
       <h2 class="section-title">Проекты</h2>
       <div class="projects" id="projects-container"></div>
     </div>
 
-    <!-- Футер -->
     <footer>&copy; 2025 urliui</footer>
   </div>
 
   <script>
-    // === Данные ===
     const DATA = {
-      // Скриншоты (для бесконечной прокрутки)
       screenshots: [
         "https://uertyk.github.io/huh/instyleslove0001.png",
         "https://uertyk.github.io/huh/instyleslove0001.png",
@@ -361,53 +369,51 @@
         "https://uertyk.github.io/huh/instyleslove0001.png",
         "https://uertyk.github.io/huh/instyleslove0001.png"
       ],
-      // Видео с YouTube (вручную)
       youtubeVideos: [
         {
           title: "Faction War (Raider Theme)",
-          url: "https://youtu.be/8kLZY87TfoI?si=H-q3mH_mAu8SlJAG",
-          videoId: "abc123"
+          url: "https://youtu.be/8kLZY87TfoI",
+          videoId: "8kLZY87TfoI"
         },
         {
-          title: "Faction War (Raider Theme)",
-          url: "https://youtu.be/8kLZY87TfoI?si=H-q3mH_mAu8SlJAG",
-          videoId: "def456"
+          title: "Faction War (Raider Theme) — 2",
+          url: "https://youtu.be/8kLZY87TfoI",
+          videoId: "8kLZY87TfoI"
         },
         {
-          title: "Faction War (Raider Theme)",
-          url: "https://youtu.be/8kLZY87TfoI?si=H-q3mH_mAu8SlJAG",
-          videoId: "ghi789"
+          title: "Faction War (Raider Theme) — 3",
+          url: "https://youtu.be/8kLZY87TfoI",
+          videoId: "8kLZY87TfoI"
         },
         {
-          title: "Faction War (Raider Theme)",
-          url: "https://youtu.be/8kLZY87TfoI?si=H-q3mH_mAu8SlJAG",
-          videoId: "jkl012"
+          title: "Faction War (Raider Theme) — 4",
+          url: "https://youtu.be/8kLZY87TfoI",
+          videoId: "8kLZY87TfoI"
         }
       ],
-      // Проекты
       projects: [
         {
           name: "My WebApp",
-          desc: "My WebApp",
+          desc: "Персональный сайт-портфолио",
           banner: "https://uertyk.github.io/huh/instyleslove0001.png",
           url: "https://github.com/urliui/urliui.ru"
         },
         {
-          name: "My WebApp",
-          desc: "My WebApp",
+          name: "Particles UI",
+          desc: "Анимированный интерфейс с частицами",
           banner: "https://uertyk.github.io/huh/instyleslove0001.png",
-          url: "https://github.com/urliui/urliui.ru"
+          url: "https://github.com/urliui/particles-ui"
         },
         {
-          name: "My WebApp",
-          desc: "My WebApp",
+          name: "Minimal CLI",
+          desc: "Набор утилит для терминала",
           banner: "https://uertyk.github.io/huh/instyleslove0001.png",
-          url: "https://github.com/urliui/urliui.ru"
+          url: "https://github.com/urliui/minimal-cli"
         }
       ]
     };
 
-    // === Скриншоты: бесконечная прокрутка ===
+    // Скриншоты
     const track = document.getElementById('screenshots-track');
     const doubled = [...DATA.screenshots, ...DATA.screenshots];
     doubled.forEach(url => {
@@ -418,7 +424,7 @@
       track.appendChild(img);
     });
 
-    // === YouTube видео с превью ===
+    // Видео
     const videosContainer = document.getElementById('videos-container');
     DATA.youtubeVideos.forEach(video => {
       const thumb = `https://i.ytimg.com/vi/${video.videoId}/mqdefault.jpg`;
@@ -434,7 +440,7 @@
       videosContainer.appendChild(card);
     });
 
-    // === Проекты ===
+    // Проекты
     const projectsContainer = document.getElementById('projects-container');
     DATA.projects.forEach(proj => {
       const card = document.createElement('a');
@@ -452,7 +458,7 @@
       projectsContainer.appendChild(card);
     });
 
-    // === Частицы ===
+    // Частицы
     tsParticles.load("tsparticles", {
       fpsLimit: 60,
       particles: {
