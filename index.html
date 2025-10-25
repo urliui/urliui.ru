@@ -3,7 +3,33 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>urliui — лап~</title>
+
+  <!-- Динамический title -->
+  <script>
+    const funTitles = ["лап~", "Юрли!", "мф~", "#зкм", "#XLU", "прр~", "факсквад"];
+    const randomTitle = funTitles[Math.floor(Math.random() * funTitles.length)];
+    document.title = `urliui — ${randomTitle}`;
+  </script>
+
+  <!-- SEO -->
+  <meta name="description" content="Юрли - ютубер, стример, дизайнер, разработчик, фронтенд, бекенд. Здесь вы сможете найти ламповое и дружное сообщество!">
+  <meta name="keywords" content="urliui, youtube, minecraft, frontend, дизайн, разработка, portfolio, bluesky, namemc">
+  <meta name="author" content="urliui">
+  <meta name="robots" content="index, follow">
+
+  <!-- Open Graph / Social -->
+  <meta property="og:title" content="urliui — лап~">
+  <meta property="og:description" content="Юрли - ютубер, стример, дизайнер, разработчик, фронтенд, бекенд.">
+  <meta property="og:image" content="https://vzge.me/face/1000/urqiui">
+  <meta property="og:url" content="https://urliui.ru">
+  <meta property="og:type" content="website">
+
+  <!-- Twitter -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="urliui — лап~">
+  <meta name="twitter:description" content="Юрли - ютубер, стример, дизайнер, разработчик, фронтенд, бекенд.">
+  <meta name="twitter:image" content="https://vzge.me/face/1000/urqiui">
+
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
@@ -95,7 +121,7 @@
     .avatar {
       width: 120px;
       height: 120px;
-      border-radius: 12px; /* ← не круг, а скруглённый квадрат */
+      border-radius: 12px;
       object-fit: cover;
       margin-bottom: 20px;
       border: 1px solid var(--border);
@@ -112,6 +138,24 @@
       margin-bottom: 12px;
     }
 
+    /* Мини-теги */
+    .badges {
+      display: flex;
+      justify-content: center;
+      gap: 8px;
+      margin-bottom: 20px;
+      flex-wrap: wrap;
+    }
+
+    .badge {
+      font-size: 13px;
+      color: var(--text-secondary);
+      background: rgba(108, 92, 231, 0.08);
+      padding: 4px 10px;
+      border-radius: 20px;
+      font-weight: 500;
+    }
+
     .bio {
       font-size: 17px;
       color: var(--text-secondary);
@@ -119,7 +163,7 @@
       margin: 0 auto;
     }
 
-    /* Соцсети с градиентом */
+    /* Соцсети */
     .socials {
       display: flex;
       justify-content: center;
@@ -141,10 +185,10 @@
       transition: all 0.25s ease;
       position: relative;
       overflow: hidden;
-      border: 1px solid var(--border); /* ← ВОТ ОНА, ОБВОДКА! */
-      background: transparent; /* важно, чтобы градиент не перекрывал border */
+      border: 1px solid var(--border);
+      background: transparent;
     }
-    
+
     .social-link::before {
       content: '';
       position: absolute;
@@ -156,12 +200,12 @@
       opacity: 0.15;
       z-index: 0;
     }
-    
+
     .social-link span {
       position: relative;
       z-index: 1;
     }
-    
+
     .social-link:hover {
       border-color: var(--accent);
       color: var(--accent-hover);
@@ -171,9 +215,7 @@
     .social-icon {
       width: 20px;
       height: 20px;
-      filter: invert(85%) sepia(10%) saturate(10%) hue-rotate(180deg);
-      position: relative;
-      z-index: 1;
+      /* Убран фильтр — иконки и так белые */
     }
 
     /* Скриншоты */
@@ -203,6 +245,8 @@
       border: 1px solid var(--border);
       cursor: pointer;
       transition: transform 0.2s, border-color 0.2s;
+      /* Убрано обрезание при наведении */
+      clip-path: inset(0);
     }
 
     .screenshot-item:hover {
@@ -213,6 +257,35 @@
     @keyframes scroll {
       0% { transform: translateX(0); }
       100% { transform: translateX(-50%); }
+    }
+
+    /* Модальное окно скриншота */
+    .modal {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.92);
+      z-index: 1000;
+      justify-content: center;
+      align-items: center;
+      opacity: 0;
+      transition: opacity 0.3s;
+    }
+
+    .modal.active {
+      display: flex;
+      opacity: 1;
+    }
+
+    .modal-img {
+      max-width: 95%;
+      max-height: 90vh;
+      object-fit: contain;
+      border-radius: 8px;
+      box-shadow: 0 0 30px rgba(108, 92, 231, 0.4);
     }
 
     /* Видео */
@@ -306,6 +379,34 @@
       border-top: 1px solid var(--border);
     }
 
+    /* Улучшения для десктопа */
+    @media (min-width: 1024px) {
+      .container {
+        padding: 80px 32px 100px;
+      }
+      .avatar {
+        width: 140px;
+        height: 140px;
+      }
+      .nickname {
+        font-size: 36px;
+      }
+      .bio {
+        font-size: 18px;
+      }
+      .screenshot-item {
+        width: 240px;
+        height: 140px;
+      }
+      .video-card {
+        width: 280px;
+      }
+      .project-banner {
+        height: 130px;
+      }
+    }
+
+    /* Мобильный */
     @media (max-width: 600px) {
       .screenshot-item { width: 180px; height: 105px; }
       .video-card { width: 100%; }
@@ -316,10 +417,22 @@
 <body>
   <div id="tsparticles"></div>
 
+  <!-- Модальное окно -->
+  <div class="modal" id="modal">
+    <img class="modal-img" id="modal-img" src="" alt="Скриншот">
+  </div>
+
   <div class="container">
     <div class="profile fade-in delay-1">
       <img src="https://vzge.me/face/1000/urqiui" alt="urliui" class="avatar">
       <h1 class="nickname">urliui</h1>
+      <div class="badges">
+        <span class="badge">#urliui</span>
+        <span class="badge">#лап</span>
+        <span class="badge">#XLU</span>
+        <span class="badge">#СП5</span>
+        <span class="badge">#лампово</span>
+      </div>
       <p class="bio">Привет! Я - Юрли. Ютубер, дизайнер, фронтендер, ну и просто душевный друг :3</p>
     </div>
 
@@ -357,7 +470,7 @@
     </div>
 
     <div class="section fade-in delay-4">
-      <h2 class="section-title">Видео на YouTube</h2>
+      <h2 class="section-title">Мои видео</h2>
       <div class="videos" id="videos-container"></div>
     </div>
 
@@ -370,15 +483,15 @@
       &copy; 2025 urliui
       <br>
       Not an official Minecraft product. We are in no way affiliated with or endorsed by Mojang Synergies AB, Microsoft Corporation or other rightsholders.
-      </br>
     </footer>
   </div>
 
   <script>
+    // Убираем пробелы из URL
+    const cleanUrl = str => str.trim();
+
     const DATA = {
       screenshots: [
-        "https://uertyk.github.io/huh/instyleslove0001.png",
-        "https://uertyk.github.io/huh/instyleslove0001.png",
         "https://uertyk.github.io/huh/instyleslove0001.png",
         "https://uertyk.github.io/huh/instyleslove0001.png",
         "https://uertyk.github.io/huh/instyleslove0001.png",
@@ -389,35 +502,29 @@
       youtubeVideos: [
         {
           title: "🌸 ТИЗЕР ИВЕНТОВ приватного сервера ✦ xl servers",
-          url: "https://youtu.be/v96kugtAE0o?si=cKAViIYdfQ5fJPEW",
+          url: "https://youtu.be/v96kugtAE0o",
+          videoId: "v96kugtAE0o"
+        },
+        {
+          title: "Faction War (Raider Theme)",
+          url: "https://youtu.be/8kLZY87TfoI",
           videoId: "8kLZY87TfoI"
         },
         {
           title: "🌸 ТИЗЕР ИВЕНТОВ приватного сервера ✦ xl servers",
-          url: "https://youtu.be/v96kugtAE0o?si=cKAViIYdfQ5fJPEW",
-          videoId: "8kLZY87TfoI"
-        },
-        {
-          title: "🌸 ТИЗЕР ИВЕНТОВ приватного сервера ✦ xl servers",
-          url: "https://youtu.be/v96kugtAE0o?si=cKAViIYdfQ5fJPEW",
-          videoId: "8kLZY87TfoI"
+          url: "https://youtu.be/v96kugtAE0o",
+          videoId: "v96kugtAE0o"
         }
       ],
       projects: [
         {
-          name: "My WebApp",
+          name: "urliui.ru",
           desc: "Персональный сайт-портфолио",
           banner: "https://uertyk.github.io/huh/instyleslove0001.png",
           url: "https://github.com/urliui/urliui.ru"
         },
         {
-          name: "My WebApp",
-          desc: "Персональный сайт-портфолио",
-          banner: "https://uertyk.github.io/huh/instyleslove0001.png",
-          url: "https://github.com/urliui/urliui.ru"
-        },
-        {
-          name: "My WebApp",
+          name: "urliui.ru",
           desc: "Персональный сайт-портфолио",
           banner: "https://uertyk.github.io/huh/instyleslove0001.png",
           url: "https://github.com/urliui/urliui.ru"
@@ -425,14 +532,26 @@
       ]
     };
 
+    // Модалка для скриншотов
+    const modal = document.getElementById('modal');
+    const modalImg = document.getElementById('modal-img');
+
+    modal.onclick = (e) => {
+      if (e.target === modal) modal.classList.remove('active');
+    };
+
     // Скриншоты
     const track = document.getElementById('screenshots-track');
     const doubled = [...DATA.screenshots, ...DATA.screenshots];
     doubled.forEach(url => {
       const img = document.createElement('img');
-      img.src = url;
+      img.src = cleanUrl(url);
       img.className = 'screenshot-item';
       img.alt = "Скриншот";
+      img.onclick = () => {
+        modalImg.src = cleanUrl(url);
+        modal.classList.add('active');
+      };
       track.appendChild(img);
     });
 
@@ -441,7 +560,7 @@
     DATA.youtubeVideos.forEach(video => {
       const thumb = `https://i.ytimg.com/vi/${video.videoId}/mqdefault.jpg`;
       const card = document.createElement('a');
-      card.href = video.url;
+      card.href = cleanUrl(video.url);
       card.className = 'video-card';
       card.target = '_blank';
       card.rel = 'noopener';
@@ -456,12 +575,12 @@
     const projectsContainer = document.getElementById('projects-container');
     DATA.projects.forEach(proj => {
       const card = document.createElement('a');
-      card.href = proj.url;
+      card.href = cleanUrl(proj.url);
       card.className = 'project-card';
       card.target = '_blank';
       card.rel = 'noopener';
       card.innerHTML = `
-        <img src="${proj.banner}" class="project-banner" alt="${proj.name}">
+        <img src="${cleanUrl(proj.banner)}" class="project-banner" alt="${proj.name}">
         <div class="project-info">
           <div class="project-name">${proj.name}</div>
           <div class="project-desc">${proj.desc}</div>
