@@ -141,9 +141,10 @@
       transition: all 0.25s ease;
       position: relative;
       overflow: hidden;
-      border: none;
+      border: 1px solid var(--border); /* ← ВОТ ОНА, ОБВОДКА! */
+      background: transparent; /* важно, чтобы градиент не перекрывал border */
     }
-
+    
     .social-link::before {
       content: '';
       position: absolute;
@@ -155,13 +156,14 @@
       opacity: 0.15;
       z-index: 0;
     }
-
+    
     .social-link span {
       position: relative;
       z-index: 1;
     }
-
+    
     .social-link:hover {
+      border-color: var(--accent);
       color: var(--accent-hover);
       transform: translateY(-2px);
     }
