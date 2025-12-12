@@ -3,33 +3,24 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-
-  <!-- Динамический title -->
   <script>
     const funTitles = ["лап~", "Юрли!", "мф~", "#зкм", "#XLU", "прр~", "факсквад"];
     const randomTitle = funTitles[Math.floor(Math.random() * funTitles.length)];
     document.title = `urliui — ${randomTitle}`;
   </script>
-
-  <!-- SEO -->
   <meta name="description" content="Юрли - ютубер, стример, дизайнер, разработчик, фронтенд, бекенд. Здесь вы сможете найти ламповое и дружное сообщество!">
   <meta name="keywords" content="urliui, youtube, minecraft, frontend, дизайн, разработка, portfolio, bluesky, namemc">
   <meta name="author" content="urliui">
   <meta name="robots" content="index, follow">
-
-  <!-- Open Graph / Social -->
   <meta property="og:title" content="urliui — лап~">
   <meta property="og:description" content="Юрли - ютубер, стример, дизайнер, разработчик, фронтенд, бекенд.">
   <meta property="og:image" content="https://vzge.me/face/1000/urqiui">
   <meta property="og:url" content="https://urliui.ru">
   <meta property="og:type" content="website">
-
-  <!-- Twitter -->
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="urliui — лап~">
   <meta name="twitter:description" content="Юрли - ютубер, стример, дизайнер, разработчик, фронтенд, бекенд.">
   <meta name="twitter:image" content="https://vzge.me/face/1000/urqiui">
-
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
@@ -114,7 +105,6 @@
       text-align: center;
     }
 
-    /* Профиль */
     .profile {
       text-align: center;
       margin-bottom: 60px;
@@ -164,7 +154,6 @@
       margin: 0 auto;
     }
 
-    /* Socials */
     .socials {
       display: flex;
       justify-content: center;
@@ -218,7 +207,6 @@
       height: 20px;
     }
 
-    /* Проекты */
     .projects {
       display: grid;
       grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
@@ -271,7 +259,6 @@
       border-top: 1px solid var(--border);
     }
 
-    /* Хедер */
     header {
       position: fixed;
       top: 0;
@@ -330,117 +317,12 @@
       transition: 0.3s;
     }
 
-    /* Кенты */
-    .buddies {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
-      gap: 24px;
-    }
-
-    .buddy-card {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      overflow: hidden;
-      cursor: pointer;
-      transition: all 0.3s;
-    }
-
-    .buddy-card:hover {
-      border-color: var(--accent);
-      transform: translateY(-3px);
-    }
-
-    .buddy-avatar {
-      width: 100%;
-      height: 120px;
-      object-fit: cover;
-      display: block;
-    }
-
-    .buddy-info {
-      padding: 16px;
-    }
-
-    .buddy-name {
-      font-weight: 600;
-      font-size: 17px;
-      margin-bottom: 6px;
-    }
-
-    .buddy-desc {
-      font-size: 13px;
-      color: var(--text-secondary);
-      line-height: 1.5;
-    }
-
-    .buddy-links {
-      display: flex;
-      gap: 10px;
-      margin-top: 8px;
-    }
-
-    .buddy-links a {
-      font-size: 12px;
-      color: var(--text-secondary);
-      text-decoration: none;
-    }
-
-    .buddy-links a:hover {
-      color: var(--accent);
-    }
-
-    /* Модалка */
-    .modal {
-      display: none;
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: rgba(0, 0, 0, 0.92);
-      z-index: 1000;
-      justify-content: center;
-      align-items: center;
-      opacity: 0;
-      transition: opacity 0.3s;
-    }
-
-    .modal.active {
-      display: flex;
-      opacity: 1;
-    }
-
-    .modal-content {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      padding: 24px;
-      border-radius: var(--radius);
-      max-width: 90%;
-      max-height: 90vh;
-      overflow-y: auto;
-      color: var(--text);
-    }
-
-    .modal-title {
-      font-size: 22px;
-      margin-bottom: 12px;
-    }
-
-    .modal-text {
-      font-size: 15px;
-      color: var(--text-secondary);
-      line-height: 1.6;
-    }
-
-    /* Мобильный */
     @media (max-width: 768px) {
       .burger {
         display: flex;
       }
 
       nav ul {
-        display: none;
         position: absolute;
         top: 60px;
         left: 0;
@@ -450,10 +332,23 @@
         padding: 16px 0;
         border-top: 1px solid var(--border);
         gap: 12px;
+        margin: 0;
+        opacity: 0;
+        visibility: hidden;
+        transform: translateY(-10px);
+        transition: opacity 0.25s ease, transform 0.25s ease, visibility 0.25s;
+        pointer-events: none;
       }
 
-      nav ul.show {
-        display: flex;
+      nav ul.active {
+        opacity: 1;
+        visibility: visible;
+        transform: translateY(0);
+        pointer-events: auto;
+      }
+
+      nav ul li {
+        text-align: center;
       }
 
       .container {
@@ -464,7 +359,6 @@
       .nickname { font-size: 26px; }
     }
 
-    /* Стили прокрутки */
     ::-webkit-scrollbar {
       width: 10px;
       height: 10px;
@@ -494,18 +388,9 @@
 <body>
   <div id="tsparticles"></div>
 
-  <!-- Модалка для кентов -->
-  <div class="modal" id="buddy-modal">
-    <div class="modal-content">
-      <h3 class="modal-title" id="modal-buddy-name">Имя</h3>
-      <p class="modal-text" id="modal-buddy-desc">Описание...</p>
-    </div>
-  </div>
-
-  <!-- Header -->
   <header>
     <div class="header-content">
-      <a href="#" class="logo">urliui</a>
+      <a href="/" class="logo">urliui</a>
       <nav>
         <ul id="nav-menu">
           <li><a href="/">Главная</a></li>
@@ -521,8 +406,7 @@
   </header>
 
   <div class="container">
-    <!-- Секция Home -->
-    <div id="home" class="profile fade-in delay-1">
+    <div class="profile fade-in delay-1">
       <img src="https://vzge.me/face/1000/urqiui" alt="urliui" class="avatar">
       <h1 class="nickname">urliui</h1>
       <div class="badges">
@@ -570,12 +454,6 @@
       <div class="projects" id="projects-container"></div>
     </div>
 
-    <!-- Секция "Кенты"
-    <div id="buddies" class="section fade-in delay-4">
-      <h2 class="section-title">Кенты</h2>
-      <div class="buddies" id="buddies-container"></div>
-    </div> -->
-
     <footer>
       &copy; 2025 urliui Все права защищены<br>
       Not an official Minecraft product. We are in no way affiliated with or endorsed by Mojang Synergies AB, Microsoft Corporation or other rightsholders.
@@ -585,7 +463,6 @@
   <script>
     const cleanUrl = str => str.trim();
 
-    // Данные
     const DATA = {
       projects: [
         {
@@ -600,26 +477,9 @@
           banner: "https://vzge.me/face/1000/urqiui",
           url: "https://github.com/urliui/urliui.ru"
         }
-      ],
-      buddies: [
-        {
-          name: "uertyk_",
-          avatar: "https://vzge.me/face/1000/uertyk_",
-          tg: "https://t.me/uertyk_",
-          discord: "uertyk_#0001",
-          desc: "Близкий друг Юрли, разработчик и бот-мастер. Увлекается анонимными чатами и безопасностью."
-        },
-        {
-          name: "Ayumi",
-          avatar: "https://ayume.ru/mainlogo.png",
-          tg: "https://t.me/ayume_chat",
-          discord: "Ayumi#1234",
-          desc: "Проект-девочка, умный мессенджер будущего. Всегда рядом с Юрли."
-        }
       ]
     };
 
-    // Проекты
     const projectsContainer = document.getElementById('projects-container');
     DATA.projects.forEach(proj => {
       const card = document.createElement('a');
@@ -637,47 +497,35 @@
       projectsContainer.appendChild(card);
     });
 
-    // Кенты
-    const buddiesContainer = document.getElementById('buddies-container');
-    const modal = document.getElementById('buddy-modal');
-    const modalName = document.getElementById('modal-buddy-name');
-    const modalDesc = document.getElementById('modal-buddy-desc');
-
-    DATA.buddies.forEach(buddy => {
-      const card = document.createElement('div');
-      card.className = 'buddy-card';
-      card.innerHTML = `
-        <img src="${cleanUrl(buddy.avatar)}" class="buddy-avatar" alt="${buddy.name}">
-        <div class="buddy-info">
-          <div class="buddy-name">${buddy.name}</div>
-          <div class="buddy-desc">${buddy.desc}</div>
-          <div class="buddy-links">
-            <a href="${buddy.tg}" target="_blank">TG</a>
-            <span>•</span>
-            <span>${buddy.discord}</span>
-          </div>
-        </div>
-      `;
-      card.addEventListener('click', () => {
-        modalName.textContent = buddy.name;
-        modalDesc.textContent = buddy.desc;
-        modal.classList.add('active');
-      });
-      buddiesContainer.appendChild(card);
-    });
-
-    modal.addEventListener('click', (e) => {
-      if (e.target === modal) modal.classList.remove('active');
-    });
-
-    // Бургер-меню
     const burger = document.getElementById('burger');
     const navMenu = document.getElementById('nav-menu');
-    burger.addEventListener('click', () => {
-      navMenu.classList.toggle('show');
-    });
 
-    // Частицы
+    if (burger && navMenu) {
+      burger.addEventListener('click', () => {
+        navMenu.classList.toggle('active');
+        const spans = burger.querySelectorAll('span');
+        if (navMenu.classList.contains('active')) {
+          spans[0].style.transform = 'rotate(45deg) translate(6px, 6px)';
+          spans[1].style.opacity = '0';
+          spans[2].style.transform = 'rotate(-45deg) translate(6px, -6px)';
+        } else {
+          spans[0].style.transform = 'rotate(0) translate(0, 0)';
+          spans[1].style.opacity = '1';
+          spans[2].style.transform = 'rotate(0) translate(0, 0)';
+        }
+      });
+
+      navMenu.querySelectorAll('a').forEach(link => {
+        link.addEventListener('click', () => {
+          navMenu.classList.remove('active');
+          const spans = burger.querySelectorAll('span');
+          spans[0].style.transform = 'rotate(0) translate(0, 0)';
+          spans[1].style.opacity = '1';
+          spans[2].style.transform = 'rotate(0) translate(0, 0)';
+        });
+      });
+    }
+
     tsParticles.load("tsparticles", {
       fpsLimit: 60,
       particles: {
