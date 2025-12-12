@@ -112,7 +112,6 @@
       margin-bottom: 24px;
       color: var(--textus);
       text-align: center;
-      
     }
 
     /* Профиль */
@@ -141,7 +140,6 @@
       margin-bottom: 12px;
     }
 
-    /* Мини-теги */
     .badges {
       display: flex;
       justify-content: center;
@@ -166,7 +164,7 @@
       margin: 0 auto;
     }
 
-    /* Соцсети */
+    /* Socials */
     .socials {
       display: flex;
       justify-content: center;
@@ -218,114 +216,6 @@
     .social-icon {
       width: 20px;
       height: 20px;
-    }
-
-    /* Скриншоты */
-    .screenshots {
-      overflow: hidden;
-      margin: 0 auto;
-      width: 100%;
-    }
-
-    .screenshots-track {
-      display: flex;
-      width: max-content;
-      animation: scroll 30s linear infinite;
-    }
-
-    .screenshots-track:hover {
-      animation-play-state: paused;
-    }
-
-    .screenshot-item {
-      width: 220px;
-      height: 130px;
-      margin: 0 14px;
-      border-radius: 8px;
-      object-fit: cover;
-      flex-shrink: 0;
-      border: 1px solid var(--border);
-      cursor: pointer;
-      transition: transform 0.2s, border-color 0.2s;
-      /* Вроде воркает.. */
-      clip-path: inset(0);
-    }
-
-    .screenshot-item:hover {
-      border-color: var(--accent);
-      transform: scale(1.02);
-    }
-
-    @keyframes scroll {
-      0% { transform: translateX(0); }
-      100% { transform: translateX(-50%); }
-    }
-
-    /* Модальное окно скриншота */
-    .modal {
-      display: none;
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: rgba(0, 0, 0, 0.92);
-      z-index: 1000;
-      justify-content: center;
-      align-items: center;
-      opacity: 0;
-      transition: opacity 0.3s;
-    }
-
-    .modal.active {
-      display: flex;
-      opacity: 1;
-    }
-
-    .modal-img {
-      max-width: 95%;
-      max-height: 90vh;
-      object-fit: contain;
-      border-radius: 8px;
-      box-shadow: 0 0 30px rgba(108, 92, 231, 0.4);
-    }
-
-    /* Видео */
-    .videos {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 24px;
-      justify-content: center;
-    }
-
-    .video-card {
-      width: 260px;
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      overflow: hidden;
-      text-decoration: none;
-      color: inherit;
-      transition: all 0.25s;
-    }
-
-    .video-card:hover {
-      border-color: var(--accent);
-      transform: translateY(-3px);
-    }
-
-    .video-thumb {
-      width: 100%;
-      height: 145px;
-      object-fit: cover;
-      display: block;
-    }
-
-    .video-title {
-      padding: 14px;
-      font-size: 15px;
-      font-weight: 500;
-      line-height: 1.4;
     }
 
     /* Проекты */
@@ -381,74 +271,220 @@
       border-top: 1px solid var(--border);
     }
 
-    /* Улучшения для десктопа */
-    @media (min-width: 1024px) {
-      .container {
-        padding: 80px 32px 100px;
-      }
-      .avatar {
-        width: 140px;
-        height: 140px;
-      }
-      .nickname {
-        font-size: 36px;
-      }
-      .bio {
-        font-size: 18px;
-      }
-      .screenshot-item {
-        width: 240px;
-        height: 140px;
-      }
-      .video-card {
-        width: 280px;
-      }
-      .project-banner {
-        height: 130px;
-      }
+    /* Хедер */
+    header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      background: rgba(13, 13, 15, 0.9);
+      z-index: 100;
+      padding: 16px 24px;
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .header-content {
+      max-width: 900px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .logo {
+      font-size: 20px;
+      font-weight: 700;
+      color: var(--text);
+      text-decoration: none;
+    }
+
+    nav ul {
+      display: flex;
+      gap: 24px;
+      list-style: none;
+    }
+
+    nav a {
+      color: var(--text);
+      text-decoration: none;
+      font-weight: 500;
+      transition: color 0.2s;
+    }
+
+    nav a:hover {
+      color: var(--accent);
+    }
+
+    .burger {
+      display: none;
+      flex-direction: column;
+      cursor: pointer;
+    }
+
+    .burger span {
+      width: 25px;
+      height: 3px;
+      background: var(--text);
+      margin: 3px 0;
+      transition: 0.3s;
+    }
+
+    /* Кенты */
+    .buddies {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+      gap: 24px;
+    }
+
+    .buddy-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      overflow: hidden;
+      cursor: pointer;
+      transition: all 0.3s;
+    }
+
+    .buddy-card:hover {
+      border-color: var(--accent);
+      transform: translateY(-3px);
+    }
+
+    .buddy-avatar {
+      width: 100%;
+      height: 120px;
+      object-fit: cover;
+      display: block;
+    }
+
+    .buddy-info {
+      padding: 16px;
+    }
+
+    .buddy-name {
+      font-weight: 600;
+      font-size: 17px;
+      margin-bottom: 6px;
+    }
+
+    .buddy-desc {
+      font-size: 13px;
+      color: var(--text-secondary);
+      line-height: 1.5;
+    }
+
+    .buddy-links {
+      display: flex;
+      gap: 10px;
+      margin-top: 8px;
+    }
+
+    .buddy-links a {
+      font-size: 12px;
+      color: var(--text-secondary);
+      text-decoration: none;
+    }
+
+    .buddy-links a:hover {
+      color: var(--accent);
+    }
+
+    /* Модалка */
+    .modal {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.92);
+      z-index: 1000;
+      justify-content: center;
+      align-items: center;
+      opacity: 0;
+      transition: opacity 0.3s;
+    }
+
+    .modal.active {
+      display: flex;
+      opacity: 1;
+    }
+
+    .modal-content {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      padding: 24px;
+      border-radius: var(--radius);
+      max-width: 90%;
+      max-height: 90vh;
+      overflow-y: auto;
+      color: var(--text);
+    }
+
+    .modal-title {
+      font-size: 22px;
+      margin-bottom: 12px;
+    }
+
+    .modal-text {
+      font-size: 15px;
+      color: var(--text-secondary);
+      line-height: 1.6;
     }
 
     /* Мобильный */
-    @media (max-width: 600px) {
-      .screenshot-item { width: 180px; height: 105px; }
-      .video-card { width: 100%; }
+    @media (max-width: 768px) {
+      .burger {
+        display: flex;
+      }
+
+      nav ul {
+        display: none;
+        position: absolute;
+        top: 60px;
+        left: 0;
+        width: 100%;
+        background: var(--bg);
+        flex-direction: column;
+        padding: 16px 0;
+        border-top: 1px solid var(--border);
+        gap: 12px;
+      }
+
+      nav ul.show {
+        display: flex;
+      }
+
+      .container {
+        padding-top: 100px;
+      }
+
+      .avatar { width: 100px; height: 100px; }
       .nickname { font-size: 26px; }
     }
 
-    /* Кастомный ползунок прокрутки */
+    /* Стили прокрутки */
     ::-webkit-scrollbar {
       width: 10px;
       height: 10px;
     }
-    
     ::-webkit-scrollbar-track {
       background: transparent;
     }
-    
     ::-webkit-scrollbar-thumb {
-      background: rgba(108, 92, 231, 0.25); /* var(--accent) с прозрачностью */
+      background: rgba(108, 92, 231, 0.25);
       border-radius: 10px;
       border: 2px solid transparent;
       background-clip: content-box;
-      transition: background 0.25s ease;
     }
-    
     ::-webkit-scrollbar-thumb:hover {
       background: rgba(108, 92, 231, 0.45);
     }
-    
-    /* Для горизонтального скролла (если понадобится) */
-    ::-webkit-scrollbar-corner {
-      background: transparent;
-    }
-    
-    /* Кастомное выделение текста */
     ::selection {
       background: rgba(108, 92, 231, 0.3);
       color: #ffffff;
     }
-    
-    /* Для Firefox */
     ::-moz-selection {
       background: rgba(108, 92, 231, 0.3);
       color: #ffffff;
@@ -458,17 +494,37 @@
 <body>
   <div id="tsparticles"></div>
 
-  <!-- Модальное окно -->
-  <div class="modal" id="modal">
-    <img class="modal-img" id="modal-img" src="" alt="Скриншот">
+  <!-- Модалка для кентов -->
+  <div class="modal" id="buddy-modal">
+    <div class="modal-content">
+      <h3 class="modal-title" id="modal-buddy-name">Имя</h3>
+      <p class="modal-text" id="modal-buddy-desc">Описание...</p>
+    </div>
   </div>
 
+  <!-- Header -->
+  <header>
+    <div class="header-content">
+      <a href="#" class="logo">urliui</a>
+      <nav>
+        <ul id="nav-menu">
+          <li><a href="/">Главная</a></li>
+          <li><a href="/buddies">Кенты</a></li>
+        </ul>
+        <div class="burger" id="burger">
+          <span></span>
+          <span></span>
+          <span></span>
+        </div>
+      </nav>
+    </div>
+  </header>
+
   <div class="container">
-    <div class="profile fade-in delay-1">
+    <!-- Секция Home -->
+    <div id="home" class="profile fade-in delay-1">
       <img src="https://vzge.me/face/1000/urqiui" alt="urliui" class="avatar">
-      <h1 class="nickname">
-        urliui
-      </h1>
+      <h1 class="nickname">urliui</h1>
       <div class="badges">
         <span class="badge">#Юрли!</span>
         <span class="badge">#лап</span>
@@ -478,6 +534,7 @@
       </div>
       <p class="bio">Привет! Я - Юрли. Ютубер, дизайнер, фронтендер, ну и просто душевный друг :3</p>
     </div>
+
     <div class="section fade-in delay-2">
       <h2 class="section-title">Соц. сети</h2>
       <div class="socials">
@@ -508,50 +565,28 @@
       </div>
     </div>
 
-    <!--<div class="section fade-in delay-3">
-      <h2 class="section-title">Скриншоты</h2>
-      <div class="screenshots">
-        <div class="screenshots-track" id="screenshots-track"></div>
-      </div>
-    </div>
-
-    <div class="section fade-in delay-4">
-      <h2 class="section-title">Мои видео</h2>
-      <div class="videos" id="videos-container"></div>
-    </div>-->
-
-    <div class="section fade-in delay-5">
+    <div class="section fade-in delay-3">
       <h2 class="section-title">Проекты</h2>
       <div class="projects" id="projects-container"></div>
     </div>
 
+    <!-- Секция "Кенты"
+    <div id="buddies" class="section fade-in delay-4">
+      <h2 class="section-title">Кенты</h2>
+      <div class="buddies" id="buddies-container"></div>
+    </div> -->
+
     <footer>
-      &copy; 2025 urliui Все права защищены
-      <br>
+      &copy; 2025 urliui Все права защищены<br>
       Not an official Minecraft product. We are in no way affiliated with or endorsed by Mojang Synergies AB, Microsoft Corporation or other rightsholders.
     </footer>
   </div>
 
   <script>
-    // Убираем пробелы из URL
     const cleanUrl = str => str.trim();
 
+    // Данные
     const DATA = {
-      screenshots: [
-        "https://ayume.ru/mainlogo.png",
-        "https://uertyk.github.io/huh/instyleslove0001.png",
-        "https://uertyk.github.io/huh/instyleslove0001.png",
-        "https://uertyk.github.io/huh/instyleslove0001.png",
-        "https://uertyk.github.io/huh/instyleslove0001.png",
-        "https://uertyk.github.io/huh/instyleslove0001.png"
-      ],
-      youtubeVideos: [
-        {
-          title: "soon...",
-          url: "https://youtu.be/v96kugtAE0o",
-          videoId: "vidq1"
-        }
-      ],
       projects: [
         {
           name: "Ayume",
@@ -565,47 +600,24 @@
           banner: "https://vzge.me/face/1000/urqiui",
           url: "https://github.com/urliui/urliui.ru"
         }
+      ],
+      buddies: [
+        {
+          name: "uertyk_",
+          avatar: "https://vzge.me/face/1000/uertyk_",
+          tg: "https://t.me/uertyk_",
+          discord: "uertyk_#0001",
+          desc: "Близкий друг Юрли, разработчик и бот-мастер. Увлекается анонимными чатами и безопасностью."
+        },
+        {
+          name: "Ayumi",
+          avatar: "https://ayume.ru/mainlogo.png",
+          tg: "https://t.me/ayume_chat",
+          discord: "Ayumi#1234",
+          desc: "Проект-девочка, умный мессенджер будущего. Всегда рядом с Юрли."
+        }
       ]
     };
-
-    // Модалка для скриншотов
-    const modal = document.getElementById('modal');
-    const modalImg = document.getElementById('modal-img');
-
-    modal.onclick = (e) => {
-      if (e.target === modal) modal.classList.remove('active');
-    };
-
-    // Скриншоты
-    const track = document.getElementById('screenshots-track');
-    const doubled = [...DATA.screenshots, ...DATA.screenshots];
-    doubled.forEach(url => {
-      const img = document.createElement('img');
-      img.src = cleanUrl(url);
-      img.className = 'screenshot-item';
-      img.alt = "Скриншот";
-      img.onclick = () => {
-        modalImg.src = cleanUrl(url);
-        modal.classList.add('active');
-      };
-      track.appendChild(img);
-    });
-
-    // Видео
-    const videosContainer = document.getElementById('videos-container');
-    DATA.youtubeVideos.forEach(video => {
-      const thumb = `https://i.ytimg.com/vi/${video.videoId}/mqdefault.jpg`;
-      const card = document.createElement('a');
-      card.href = cleanUrl(video.url);
-      card.className = 'video-card';
-      card.target = '_blank';
-      card.rel = 'noopener';
-      card.innerHTML = `
-        <img src="${thumb}" class="video-thumb" alt="${video.title}">
-        <div class="video-title">${video.title}</div>
-      `;
-      videosContainer.appendChild(card);
-    });
 
     // Проекты
     const projectsContainer = document.getElementById('projects-container');
@@ -623,6 +635,46 @@
         </div>
       `;
       projectsContainer.appendChild(card);
+    });
+
+    // Кенты
+    const buddiesContainer = document.getElementById('buddies-container');
+    const modal = document.getElementById('buddy-modal');
+    const modalName = document.getElementById('modal-buddy-name');
+    const modalDesc = document.getElementById('modal-buddy-desc');
+
+    DATA.buddies.forEach(buddy => {
+      const card = document.createElement('div');
+      card.className = 'buddy-card';
+      card.innerHTML = `
+        <img src="${cleanUrl(buddy.avatar)}" class="buddy-avatar" alt="${buddy.name}">
+        <div class="buddy-info">
+          <div class="buddy-name">${buddy.name}</div>
+          <div class="buddy-desc">${buddy.desc}</div>
+          <div class="buddy-links">
+            <a href="${buddy.tg}" target="_blank">TG</a>
+            <span>•</span>
+            <span>${buddy.discord}</span>
+          </div>
+        </div>
+      `;
+      card.addEventListener('click', () => {
+        modalName.textContent = buddy.name;
+        modalDesc.textContent = buddy.desc;
+        modal.classList.add('active');
+      });
+      buddiesContainer.appendChild(card);
+    });
+
+    modal.addEventListener('click', (e) => {
+      if (e.target === modal) modal.classList.remove('active');
+    });
+
+    // Бургер-меню
+    const burger = document.getElementById('burger');
+    const navMenu = document.getElementById('nav-menu');
+    burger.addEventListener('click', () => {
+      navMenu.classList.toggle('show');
     });
 
     // Частицы
