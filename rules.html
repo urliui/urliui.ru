@@ -1,0 +1,453 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>urliui — Правила</title>
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  
+  <script src="https://cdn.jsdelivr.net/npm/tsparticles@2.12.0/tsparticles.bundle.min.js"></script>
+
+  <style>
+    :root {
+      --bg: #0d0d0f;
+      --surface: #141418;
+      --border: #25252d;
+      --text: #e6e6f0;
+      --text-secondary: #a0a0b0;
+      --accent: #6c5ce7;
+      --accent-hover: #7d6bff;
+      --radius: 12px;
+      --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Inter', sans-serif;
+      line-height: 1.6;
+      overflow-x: hidden;
+      min-height: 100vh;
+    }
+
+    #tsparticles {
+      position: fixed;
+      top: 0; left: 0; width: 100%; height: 100%;
+      z-index: -1;
+    }
+
+    /* --- Header --- */
+    header {
+      position: fixed;
+      top: 0; left: 0; width: 100%;
+      background: rgba(13, 13, 15, 0.8);
+      z-index: 100;
+      padding: 16px 24px;
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .header-content {
+      max-width: 1100px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .logo { font-size: 20px; font-weight: 700; color: var(--text); text-decoration: none; }
+    nav ul { display: flex; gap: 24px; list-style: none; }
+    nav a { color: var(--text); text-decoration: none; font-weight: 500; transition: 0.2s; }
+    nav a:hover { color: var(--accent); }
+
+    /* --- Layout --- */
+    .rules-container {
+      max-width: 1100px;
+      margin: 120px auto 80px;
+      display: grid;
+      grid-template-columns: 280px 1fr;
+      gap: 40px;
+      padding: 0 24px;
+    }
+
+    /* --- Sidebar --- */
+    .sidebar {
+      position: sticky;
+      top: 100px;
+      height: fit-content;
+    }
+
+    .sidebar-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 20px;
+    }
+
+    .sidebar-title {
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      color: var(--text-secondary);
+      margin-bottom: 20px;
+      font-weight: 700;
+      display: block;
+    }
+
+    .sidebar-nav {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .sidebar-link {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 12px 16px;
+      border-radius: 8px;
+      text-decoration: none;
+      color: var(--text-secondary);
+      transition: var(--transition);
+      font-size: 14px;
+      font-weight: 500;
+    }
+
+    .sidebar-link svg {
+      width: 18px;
+      height: 18px;
+      fill: currentColor;
+    }
+
+    .sidebar-link:hover, .sidebar-link.active {
+      background: rgba(108, 92, 231, 0.1);
+      color: var(--accent);
+    }
+
+    /* --- Content --- */
+    .rules-section {
+      margin-bottom: 60px;
+      scroll-margin-top: 120px;
+    }
+
+    .section-title {
+      font-size: 22px;
+      font-weight: 700;
+      margin-bottom: 24px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      color: var(--text);
+    }
+
+    .section-title svg {
+      width: 24px;
+      height: 24px;
+      fill: var(--accent);
+    }
+
+    /* --- Accordion Rule Item --- */
+    .rule-item {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      margin-bottom: 12px;
+      overflow: hidden;
+      transition: var(--transition);
+    }
+
+    .rule-item:hover {
+      border-color: var(--accent);
+      background: #18181d;
+    }
+
+    .rule-header {
+      padding: 20px 24px;
+      cursor: pointer;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      user-select: none;
+    }
+
+    .rule-info {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .rule-number {
+      background: rgba(108, 92, 231, 0.1);
+      color: var(--accent);
+      padding: 4px 8px;
+      border-radius: 6px;
+      font-weight: 700;
+      font-size: 13px;
+      min-width: 35px;
+      text-align: center;
+    }
+
+    .rule-name {
+      font-weight: 600;
+      font-size: 16px;
+      color: var(--text);
+    }
+
+    .rule-chevron {
+      width: 20px;
+      height: 20px;
+      fill: var(--text-secondary);
+      transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .rule-body {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.4s ease, opacity 0.4s ease;
+      opacity: 0;
+    }
+
+    .rule-content {
+      padding: 0 24px 24px 75px; /* Выравнивание текста под названием */
+      color: var(--text-secondary);
+      font-size: 15px;
+      line-height: 1.7;
+    }
+
+    /* Active State */
+    .rule-item.active {
+      border-color: var(--accent);
+    }
+
+    .rule-item.active .rule-body {
+      max-height: 500px;
+      opacity: 1;
+    }
+
+    .rule-item.active .rule-chevron {
+      transform: rotate(180deg);
+      fill: var(--accent);
+    }
+
+    /* --- Animations --- */
+    .fade-in {
+      opacity: 0;
+      transform: translateY(20px);
+      animation: fadeIn 0.8s forwards;
+    }
+
+    @keyframes fadeIn {
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .delay-1 { animation-delay: 0.1s; }
+    .delay-2 { animation-delay: 0.2s; }
+
+    /* --- Mobile Adaptation --- */
+    @media (max-width: 900px) {
+      .rules-container {
+        grid-template-columns: 1fr;
+        margin-top: 100px;
+      }
+
+      .sidebar {
+        position: relative;
+        top: 0;
+        margin-bottom: 20px;
+      }
+
+      .sidebar-nav {
+        flex-direction: row;
+        overflow-x: auto;
+        padding-bottom: 8px;
+      }
+
+      .sidebar-link {
+        white-space: nowrap;
+      }
+
+      .sidebar-title { display: none; }
+      
+      .rule-content {
+        padding: 0 20px 20px 20px;
+      }
+    }
+
+    /* Scrollbar */
+    ::-webkit-scrollbar { width: 8px; }
+    ::-webkit-scrollbar-track { background: var(--bg); }
+    ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 10px; }
+    ::-webkit-scrollbar-thumb:hover { background: var(--accent); }
+  </style>
+</head>
+<body>
+  <div id="tsparticles"></div>
+
+  <header>
+    <div class="header-content">
+      <a href="/" class="logo">urliui</a>
+      <nav>
+        <ul>
+          <li><a href="/">Главная</a></li>
+          <li><a href="/rules" style="color: var(--accent);">Правила</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <div class="rules-container">
+    <aside class="sidebar fade-in delay-1">
+      <div class="sidebar-card">
+        <span class="sidebar-title">Разделы</span>
+        <div class="sidebar-nav">
+          <a href="#general" class="sidebar-link active">
+            <svg viewBox="0 0 24 24"><path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4zm0 10.99h7c-.47 4.34-2.85 7.92-7 9.15v-9.15H5V6.3l7-3.11v7.8z"/></svg>
+            Общее
+          </a>
+          <a href="#chat" class="sidebar-link">
+            <svg viewBox="0 0 24 24"><path d="M20 2H4c-1.1 0-2 .9-2 2v18l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm0 14H5.17L4 17.17V4h16v12z"/></svg>
+            Общение
+          </a>
+          <a href="#game" class="sidebar-link">
+            <svg viewBox="0 0 24 24"><path d="M21 6H3c-1.1 0-2 .9-2 2v8c0 1.1.9 2 2 2h18c1.1 0 2-.9 2-2V8c0-1.1-.9-2-2-2zm-10 7H8v3H6v-3H3v-2h3V8h2v3h3v2zm4.5 2c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5zm4-3c-.83 0-1.5-.67-1.5-1.5S18.67 9 19.5 9s1.5.67 1.5 1.5-.67 1.5-1.5 1.5z"/></svg>
+            Геймплей
+          </a>
+        </div>
+      </div>
+    </aside>
+
+    <main class="content fade-in delay-2">
+      
+      <section class="rules-section" id="general">
+        <h2 class="section-title">
+          <svg viewBox="0 0 24 24"><path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4z"/></svg>
+          Общие правила
+        </h2>
+
+        <div class="rule-item">
+          <div class="rule-header">
+            <div class="rule-info">
+              <span class="rule-number">1.1</span>
+              <span class="rule-name">Уважение и адекватность</span>
+            </div>
+            <svg class="rule-chevron" viewBox="0 0 24 24"><path d="M7.41 8.59L12 13.17l4.59-4.58L18 10l-6 6-6-6z"/></svg>
+          </div>
+          <div class="rule-body">
+            <div class="rule-content">
+              Будьте вежливы ко всем игрокам и администрации. Оскорбления, провокации и любое проявление токсичности на наших ресурсах строго запрещены. Мы ценим ламповую атмосферу!
+            </div>
+          </div>
+        </div>
+
+        <div class="rule-item">
+          <div class="rule-header">
+            <div class="rule-info">
+              <span class="rule-number">1.2</span>
+              <span class="rule-name">Безопасность аккаунта</span>
+            </div>
+            <svg class="rule-chevron" viewBox="0 0 24 24"><path d="M7.41 8.59L12 13.17l4.59-4.58L18 10l-6 6-6-6z"/></svg>
+          </div>
+          <div class="rule-body">
+            <div class="rule-content">
+              Игрок несёт полную ответственность за свой аккаунт. Мы рекомендуем использовать сложные пароли и не передавать данные третьим лицам.
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="rules-section" id="chat">
+        <h2 class="section-title">
+          <svg viewBox="0 0 24 24"><path d="M20 2H4c-1.1 0-2 .9-2 2v18l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2z"/></svg>
+          Правила чата
+        </h2>
+
+        <div class="rule-item">
+          <div class="rule-header">
+            <div class="rule-info">
+              <span class="rule-number">2.1</span>
+              <span class="rule-name">Спам и Капс</span>
+            </div>
+            <svg class="rule-chevron" viewBox="0 0 24 24"><path d="M7.41 8.59L12 13.17l4.59-4.58L18 10l-6 6-6-6z"/></svg>
+          </div>
+          <div class="rule-body">
+            <div class="rule-content">
+              Запрещено отправлять сообщения, состоящие только из заглавных букв, а также бессмысленный флуд или многократное повторение одной и той же фразы.
+            </div>
+          </div>
+        </div>
+      </section>
+
+    </main>
+  </div>
+
+  <script>
+    // Аккордеон (Раскрытие правил)
+    document.querySelectorAll('.rule-header').forEach(header => {
+      header.addEventListener('click', () => {
+        const currentItem = header.parentElement;
+        const isActive = currentItem.classList.contains('active');
+
+        // Если хочешь, чтобы при открытии нового правила старое закрывалось — раскомментируй код ниже:
+        /*
+        document.querySelectorAll('.rule-item').forEach(item => {
+          item.classList.remove('active');
+        });
+        */
+
+        if (!isActive) {
+          currentItem.classList.add('active');
+        } else {
+          currentItem.classList.remove('active');
+        }
+      });
+    });
+
+    // Подсветка активного раздела в сайдбаре при скролле
+    const sections = document.querySelectorAll('.rules-section');
+    const navLinks = document.querySelectorAll('.sidebar-link');
+
+    window.addEventListener('scroll', () => {
+      let current = "";
+      sections.forEach(section => {
+        const sectionTop = section.offsetTop;
+        if (pageYOffset >= sectionTop - 150) {
+          current = section.getAttribute('id');
+        }
+      });
+
+      navLinks.forEach(link => {
+        link.classList.remove('active');
+        if (link.getAttribute('href').includes(current)) {
+          link.classList.add('active');
+        }
+      });
+    });
+
+    // Particles фоновые (под стиль главной)
+    tsParticles.load("tsparticles", {
+      fpsLimit: 60,
+      particles: {
+        number: { value: 30, density: { enable: true, area: 800 } },
+        color: { value: "#6c5ce7" },
+        shape: { type: "circle" },
+        opacity: { value: 0.15, random: true },
+        size: { value: { min: 1, max: 3 } },
+        move: {
+          enable: true,
+          speed: 0.8,
+          direction: "none",
+          random: true,
+          straight: false,
+          outModes: { default: "out" }
+        }
+      },
+      detectRetina: true
+    });
+  </script>
+</body>
+  </html>
