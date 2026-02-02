@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MC Servher Status ☠️</title>
+    <style>
+        :root {
+            --bg: #121212;
+            --card: #1e1e1e;
+            --text: #e0e0e0;
+            --accent: #4caf50;
+            --error: #cf6679;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg);
+            color: var(--text);
+            display: flex;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 500px;
+            background: var(--card);
+            padding: 2rem;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.5);
+        }
+
+        h2 { text-align: center; margin-bottom: 1.5rem; }
+
+        .input-group {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        input {
+            flex: 1;
+            padding: 10px;
+            border-radius: 6px;
+            border: 1px solid #333;
+            background: #252525;
+            color: white;
+            outline: none;
+        }
+
+        button {
+            padding: 10px 20px;
+            background: var(--accent);
+            border: none;
+            border-radius: 6px;
+            color: white;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        button:hover { opacity: 0.9; }
+
+        .result {
+            display: none;
+            border-top: 1px solid #333;
+            padding-top: 20px;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .status-item { margin: 10px 0; display: flex; justify-content: space-between; }
+        .label { color: #888; }
+        .value { font-weight: 500; }
+        
+        .player-list {
+            margin-top: 15px;
+            background: #252525;
+            padding: 10px;
+            border-radius: 6px;
+            max-height: 150px;
+            overflow-y: auto;
+            font-size: 0.9rem;
+        }
+
+        .offline { color: var(--error); text-align: center; }
+
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h2>MC Status Checker</h2>
+    
+    <div class="input-group">
+        <input type="text" id="serverIP" placeholder="mc.hypixel.net или 127.0.0.1:25565">
+        <button onclick="checkServer()">Проверить</button>
+    </div>
+
+    <div id="loading" style="display:none; text-align:center;">Загрузка...</div>
+    
+    <div id="errorBox" class="offline" style="display:none;">Сервер не найден или оффлайн</div>
+
+    <div id="resultBox" class="result">
+        <div class="status-item">
+            <span class="label">Статус:</span>
+            <span class="value" style="color: var(--accent)">Онлайн</span>
+        </div>
+        <div class="status-item">
+            <span class="label">Версия:</span>
+            <span id="version" class="value">-</span>
+        </div>
+        <div class="status-item">
+            <span class="label">Тип (EULA):</span>
+            <span id="cracked" class="value">-</span>
+        </div>
+        <div class="status-item">
+            <span class="label">Игроки:</span>
+            <span id="playersCount" class="value">-</span>
+        </div>
+        <div id="playerList" class="player-list"></div>
+    </div>
+</div>
+
+<script>
+    async function checkServer() {
+        const address = document.getElementById('serverIP').value.trim();
+        if (!address) return;
+
+        const resBox = document.getElementById('resultBox');
+        const errBox = document.getElementById('errorBox');
+        const loader = document.getElementById('loading');
+        
+        // Сброс состояния
+        resBox.style.display = 'none';
+        errBox.style.display = 'none';
+        loader.style.display = 'block';
+
+        try {
+            const response = await fetch(`https://api.mcstatus.io/v2/status/java/${address}`);
+            const data = await response.json();
+
+            loader.style.display = 'none';
+
+            if (!data.online) {
+                errBox.style.display = 'block';
+                return;
+            }
+
+            // Заполнение данных
+            resBox.style.display = 'block';
+            document.getElementById('version').innerText = data.version?.name_clean || 'Неизвестно';
+            document.getElementById('playersCount').innerText = `${data.players.online} / ${data.players.max}`;
+            
+            // Проверка на пиратку (косвенная)
+            // Важно: Точно узнать "пиратка или лицуха" через API невозможно без входа.
+            // Но если сервер не присылает данные о скинах/UUID в списке игроков, это часто признак оффлайн-мода.
+            document.getElementById('cracked').innerText = "Нужен вход для проверки";
+
+            // Список игроков
+            const listContainer = document.getElementById('playerList');
+            listContainer.innerHTML = '';
+            
+            if (data.players.list && data.players.list.length > 0) {
+                data.players.list.forEach(player => {
+                    const p = document.createElement('div');
+                    p.innerText = `• ${player.name_clean}`;
+                    listContainer.appendChild(p);
+                });
+            } else {
+                listContainer.innerText = 'Список игроков пуст или скрыт';
+            }
+
+        } catch (error) {
+            loader.style.display = 'none';
+            errBox.style.display = 'block';
+            errBox.innerText = "Ошибка при запросе к API";
+        }
+    }
+</script>
+
+</body>
+</html>
