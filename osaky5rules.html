@@ -1,0 +1,776 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Заброшка Зелёнки — Правила</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/tsparticles@2.12.0/tsparticles.bundle.min.js"></script>
+  <style>
+    :root {
+      --bg: #0d0d0f;
+      --surface: #141418;
+      --border: #25252d;
+      --text: #e6e6f0;
+      --text-secondary: #a0a0b0;
+      --accent: #6c5ce7;
+      --accent-glow: rgba(108, 92, 231, 0.3);
+      --warning: #ff9f43;
+      --danger: #ff4757;
+      --radius: 18px;
+      --curve: cubic-bezier(0.65, 0, 0.35, 1);
+      --transition: all 0.5s var(--curve);
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    
+    /* СЧЕТЧИК ДЛЯ АВТО-НУМЕРАЦИИ (1.1, 1.2...) */
+    body {
+      counter-reset: section-counter;
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Inter', sans-serif;
+      line-height: 1.6;
+      overflow-x: hidden;
+      min-height: 100vh;
+    }
+    
+    #tsparticles {
+      position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1;
+    }
+
+    header {
+      position: fixed; top: 0; left: 0; width: 100%;
+      background: rgba(13, 13, 15, 0.8);
+      z-index: 100; padding: 16px 24px;
+      backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--border);
+    }
+    .header-content {
+      max-width: 900px; margin: 0 auto;
+      display: flex; flex-direction: column; gap: 15px;
+    }
+    
+    .top-bar {
+        display: flex; justify-content: space-between; align-items: center; width: 100%;
+    }
+    .logo { 
+        font-size: 20px; font-weight: 800; color: var(--text); text-decoration: none;
+        transition: var(--transition);
+    }
+    .logo:hover { opacity: 0.7; }
+
+    /* URUI ПОИСК */
+    .search-wrapper { position: relative; width: 100%; }
+    .search-input {
+        width: 100%;
+        background: rgba(255,255,255,0.05);
+        border: 1px solid var(--border);
+        border-radius: 12px;
+        padding: 12px 20px 12px 45px;
+        color: var(--text);
+        font-family: inherit; font-size: 14px;
+        outline: none; transition: var(--transition);
+    }
+    .search-input:focus {
+        border-color: var(--accent);
+        box-shadow: 0 0 0 4px var(--accent-glow);
+        background: rgba(255,255,255,0.08);
+    }
+    .search-icon {
+        position: absolute; left: 16px; top: 50%; transform: translateY(-50%);
+        width: 16px; height: 16px; fill: var(--text-secondary); pointer-events: none;
+    }
+
+    .container {
+      max-width: 750px; margin: 160px auto 100px; padding: 0 24px;
+    }
+
+    /* Disclaimer */
+    .disclaimer {
+      background: rgba(255, 159, 67, 0.05);
+      border: 1px solid rgba(255, 159, 67, 0.2);
+      border-radius: var(--radius);
+      padding: 16px 20px; margin-bottom: 40px;
+      display: flex; align-items: center; gap: 16px;
+      backdrop-filter: blur(10px);
+    }
+    .disclaimer svg { width: 24px; height: 24px; fill: var(--warning); flex-shrink: 0; }
+    .disclaimer-text { font-size: 13px; color: var(--text-secondary); }
+    .disclaimer-text strong { color: var(--warning); display: block; margin-bottom: 2px; text-transform: uppercase; font-size: 11px; letter-spacing: 1px; }
+
+    /* Nav Chips */
+    .nav-chips {
+      display: flex; justify-content: center; flex-wrap: wrap; gap: 10px; margin-bottom: 50px;
+    }
+    .chip {
+      display: flex; align-items: center; gap: 8px;
+      padding: 10px 20px; background: var(--surface);
+      border: 1px solid var(--border); border-radius: 100px;
+      text-decoration: none; color: var(--text-secondary);
+      font-size: 13px; font-weight: 600; transition: var(--transition);
+    }
+    .chip:hover { border-color: var(--accent); color: var(--text); transform: translateY(-2px); }
+    .chip.active { background: var(--accent); border-color: var(--accent); color: white; box-shadow: 0 8px 20px -5px var(--accent-glow); }
+
+    /* Sections */
+    .rules-section {
+      counter-increment: section-counter; 
+      counter-reset: rule-counter;
+      margin-bottom: 60px; scroll-margin-top: 180px;
+    }
+    .section-title {
+      font-size: 24px; font-weight: 800; margin-bottom: 25px;
+      display: inline-flex; align-items: center; gap: 12px; letter-spacing: -0.5px;
+    }
+    .section-title svg { width: 24px; height: 24px; fill: var(--accent); }
+
+    /* Rules Item */
+    .rule-item {
+      counter-increment: rule-counter;
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: var(--radius); margin-bottom: 15px; overflow: hidden;
+      transition: var(--transition); position: relative;
+    }
+    .rule-item:hover { border-color: rgba(108, 92, 231, 0.5); background: #19191f; }
+    
+    .rule-header {
+      padding: 20px 24px; cursor: pointer; display: flex;
+      justify-content: space-between; align-items: center; user-select: none;
+    }
+    .rule-info { display: flex; align-items: center; gap: 15px; }
+    
+    /* АВТО-НУМЕРАЦИЯ CSS */
+    .rule-number::before {
+      content: counter(section-counter) "." counter(rule-counter);
+      font-family: 'Inter', monospace; color: var(--accent); font-weight: 800; font-size: 15px;
+      background: rgba(108, 92, 231, 0.1); padding: 4px 8px; border-radius: 6px;
+    }
+    
+    .rule-name { font-weight: 600; font-size: 16px; letter-spacing: -0.2px; }
+    .rule-chevron { width: 20px; height: 20px; fill: var(--text-secondary); transition: transform 0.5s var(--curve); }
+
+    .rule-body {
+      display: grid; grid-template-rows: 0fr;
+      transition: grid-template-rows 0.5s var(--curve), opacity 0.5s var(--curve); opacity: 0;
+    }
+    .rule-item.active .rule-body { grid-template-rows: 1fr; opacity: 1; }
+    .rule-item.active { border-color: var(--accent); background: #1c1c24; transform: scale(1.01); box-shadow: 0 15px 30px -10px rgba(0,0,0,0.4); }
+    .rule-item.active .rule-chevron { transform: rotate(180deg); fill: var(--accent); }
+
+    .inner-content { overflow: hidden; }
+    .rule-content { padding: 0 24px 24px 24px; color: var(--text-secondary); font-size: 15px; line-height: 1.6; }
+
+    /* Теги (urliui feature) */
+    .sub-tag {
+      font-size: 10px; text-transform: uppercase; font-weight: 800;
+      padding: 2px 6px; border-radius: 4px; margin-left: 10px; display: inline-block;
+      background: var(--accent); color: white; vertical-align: middle;
+    }
+    .sub-tag.danger { background: var(--danger); }
+    .sub-tag.warning { background: var(--warning); color: #141418; }
+
+    .no-results { text-align: center; padding: 40px; color: var(--text-secondary); display: none; }
+    
+    .fade-in { animation: reveal 0.8s var(--curve) forwards; opacity: 0; transform: translateY(20px); }
+    @keyframes reveal { to { opacity: 1; transform: translateY(0); } }
+
+    @media (max-width: 600px) {
+      .header-content { gap: 10px; }
+      .container { margin-top: 180px; }
+      .rule-header { padding: 16px; }
+      .rule-name { font-size: 15px; }
+      .sub-tag { display: none; } /* Скрываем теги на мобильных для экономии места */
+    }
+  </style>
+</head>
+<body>
+  <div id="tsparticles"></div>
+  
+  <header>
+    <div class="header-content">
+      <div class="top-bar">
+        <a href="/" class="logo">Заброшка Зелёнки</a>
+        <a href="/" style="color: var(--text-secondary); text-decoration: none; font-size: 13px;">← На главную</a>
+      </div>
+      <div class="search-wrapper">
+         <svg class="search-icon" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg>
+         <input type="text" class="search-input" id="ruleSearch" placeholder="Поиск (например: спам, бан, телиот)...">
+      </div>
+    </div>
+  </header>
+  
+  <div class="container">
+    <div class="disclaimer fade-in">
+      <svg viewBox="0 0 24 24"><path d="M12 2L1 21h22L12 2zm0 3.45L19.53 19H4.47L12 5.45zM11 16h2v2h-2v-2zm0-6h2v4h-2v-4z"/></svg>
+      <div class="disclaimer-text">
+        <strong>Важное уведомление</strong>
+        Мау..~ Незнание правил не освобождает от ответственности.
+      </div>
+    </div>
+
+    <div class="nav-chips fade-in" style="animation-delay: 0.1s;">
+      <a href="#general" class="chip active">Общее</a>
+      <a href="#content" class="chip">Контент</a>
+      <a href="#ads" class="chip">Реклама</a>
+      <a href="#security" class="chip">Безопасность</a>
+      <a href="#admin" class="chip">Админ</a>
+      <a href="#extra" class="chip">Дополнительно</a>
+      <a href="#sanctions" class="chip">Санкции</a>
+    </div>
+
+    <main id="rulesContainer">
+      
+      <section id="general" class="rules-section fade-in" style="animation-delay: 0.2s;">
+        <h2 class="section-title">
+          <svg viewBox="0 0 24 24"><path d="M12 2L4 5v6.09c0 5.05 3.41 9.76 8 10.91 4.59-1.15 8-5.86 8-10.91V5l-8-3z"/></svg>
+          Общая информация
+        </h2>
+        <div class="rule-item">
+          <div class="rule-header">
+            <div class="rule-info">
+              <span class="rule-number"></span>
+              <span class="rule-name">Назначение чата</span>
+            </div>
+            <svg class="rule-chevron" viewBox="0 0 24 24"><path d="M16.59 8.59L12 13.17 7.41 8.59 6 10l6 6 6-6z"/></svg>
+          </div>
+          <div class="rule-body">
+            <div class="inner-content">
+              <div class="rule-content">
+                Данный чат служит площадкой для конструктивного общения, обмена мнениями и поддержки между участниками сообщества «Заброшка Зелёнки». Любое использование чата в иных целях не допускается.
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="rule-item">
+          <div class="rule-header">
+            <div class="rule-info">
+              <span class="rule-number"></span>
+              <span class="rule-name">Вежливость и уважение</span>
+            </div>
+            <svg class="rule-chevron" viewBox="0 0 24 24"><path d="M16.59 8.59L12 13.17 7.41 8.59 6 10l6 6 6-6z"/></svg>
+          </div>
+          <div class="rule-body">
+            <div class="inner-content">
+              <div class="rule-content">
+                Общение должно строиться на принципах уважения, толерантности и доброжелательности. Недопустимы высокомерие, снисходительность или пренебрежение к мнению других.
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="rule-item">
+          <div class="rule-header">
+            <div class="rule-info">
+              <span class="rule-number"></span>
+              <span class="rule-name">Оскорбления и троллинг <span class="sub-tag danger">Zero Tolerance</span></span>
+            </div>
+            <svg class="rule-chevron" viewBox="0 0 24 24"><path d="M16.59 8.59L12 13.17 7.41 8.59 6 10l6 6 6-6z"/></svg>
+          </div>
+          <div class="rule-body">
+            <div class="inner-content">
+              <div class="rule-content">
+                Категорически запрещены личные оскорбления, домогательства, целенаправленное провоцирование конфликтов, а также любые формы буллинга и троллинга.
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="content" class="rules-section fade-in">
+        <h2 class="section-title">
+          <svg viewBox="0 0 24 24"><path d="M20 2H4c-1.1 0-2 .9-2 2v18l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm0 14H5.17L4 17.17V4h16v12z"/></svg>
+          Контент и формат
+        </h2>
+        <div class="rule-item">
+          <div class="rule-header">
+            <div class="rule-info">
+              <span class="rule-number"></span>
+              <span class="rule-name">Использование тегов</span>
+            </div>
+            <svg class="rule-chevron" viewBox="0 0 24 24"><path d="M16.59 8.59L12 13.17 7.41 8.59 6 10l6 6 6-6z"/></svg>
+          </div>
+          <div class="rule-body">
+            <div class="inner-content">
+              <div class="rule-content">
+                Для привлечения внимания к важной информации (например, анонсы, объявления) используйте специальные теги, предназначенные для таких целей. Злоупотребление тегами не допускается.
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="rule-item">
+          <div class="rule-header">
+            <div class="rule-info">
+              <span class="rule-number"></span>
+              <span class="rule-name">Форматирование больших текстов</span>
+            </div>
+            <svg class="rule-chevron" viewBox="0 0 24 24"><path d="M16.59 8.59L12 13.17 7.41 8.59 6 10l6 6 6-6z"/></svg>
+          </div>
+          <div class="rule-body">
+            <div class="inner-content">
+              <div class="rule-content">
+                Объёмные сообщения, эссе, рассказы и прочие длинные тексты следует оформлять как отдельные посты или использовать формат «спойлер», чтобы не засорять ленту чата.
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="rule-item">
+          <div class="rule-header">
+            <div class="rule-info">
+              <span class="rule-number"></span>
+              <span class="rule-name">Спам и ссылки</span>
+            </div>
+            <svg class="rule-chevron" viewBox="0 0 24 24"><path d="M16.59 8.59L12 13.17 7.41 8.59 6 10l6 6 6-6z"/></svg>
+          </div>
+          <div class="rule-body">
+            <div class="inner-content">
+              <div class="rule-content">
+                Рассылка повторяющихся сообщений, навязчивая реклама и размещение ссылок на сторонние сайты без предварительного согласования с администрацией запрещены.
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="ads" class="rules-section fade-in">
+        <h2 class="section-title">
+           <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1.41 16.09V20h-2.67v-1.93c-1.71-.36-3.15-1.46-3.27-3.4h1.96c.1 1.05 1.18 1.91 2.53 1.91 1.29 0 2.13-.81 2.13-1.88 0-1.1-.68-1.57-1.78-1.87L9.64 12.1c-1.57-.43-2.62-1.5-2.62-3.17 0-1.83 1.4-3.08 3.32-3.4V3.5h2.67v1.93c1.45.27 2.73 1.18 3 2.87h-1.92c-.22-.92-1.07-1.49-2.31-1.49-1.29 0-2.02.77-2.02 1.8 0 .99.73 1.5 2.05 1.87l2.67.73c1.69.46 2.55 1.63 2.55 3.31 0 1.94-1.5 3.23-3.59 3.55z"/></svg>
+          Реклама и продажи
+        </h2>
+        <div class="rule-item">
+          <div class="rule-header">
+            <div class="rule-info">
+              <span class="rule-number"></span>
+              <span class="rule-name">Согласование рекламы</span>
+            </div>
+            <svg class="rule-chevron" viewBox="0 0 24 24"><path d="M16.59 8.59L12 13.17 7.41 8.59 6 10l6 6 6-6z"/></svg>
+          </div>
+          <div class="rule-body">
+            <div class="inner-content">
+              <div class="rule-content">
+                Любая форма рекламы, включая продвижение проектов, товаров или услуг, допускается исключительно после получения письменного разрешения от администрации чата.
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="rule-item">
+          <div class="rule-header">
+            <div class="rule-info">
+              <span class="rule-number"></span>
+              <span class="rule-name">Мошенничество <span class="sub-tag danger">SCAM</span></span>
+            </div>
+            <svg class="rule-chevron" viewBox="0 0 24 24"><path d="M16.59 8.59L12 13.17 7.41 8.59 6 10l6 6 6-6z"/></svg>
+          </div>
+          <div class="rule-body">
+            <div class="inner-content">
+              <div class="rule-content">
+                Предложение «заработать», обман с целью получения личных данных, денег или иных ресурсов строго запрещены и влекут за собой немедленное исключение.
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="security" class="rules-section fade-in">
+        <h2 class="section-title">
+          <svg viewBox="0 0 24 24"><path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4z"/></svg>
+          Безопасность
+        </h2>
+        <div class="rule-item">
+          <div class="rule-header">
+            <div class="rule-info">
+              <span class="rule-number"></span>
+              <span class="rule-name">Личные данные (Doxxing) <span class="sub-tag danger">Strict</span></span>
+            </div>
+            <svg class="rule-chevron" viewBox="0 0 24 24"><path d="M16.59 8.59L12 13.17 7.41 8.59 6 10l6 6 6-6z"/></svg>
+          </div>
+          <div class="rule-body">
+            <div class="inner-content">
+              <div class="rule-content">
+                Запрещено публиковать или запрашивать личные данные других участников: ФИО, адрес, номер телефона, данные банковских карт и т.п.
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="rule-item">
+          <div class="rule-header">
+            <div class="rule-info">
+              <span class="rule-number"></span>
+              <span class="rule-name">Финансовые операции</span>
+            </div>
+            <svg class="rule-chevron" viewBox="0 0 24 24"><path d="M16.59 8.59L12 13.17 7.41 8.59 6 10l6 6 6-6z"/></svg>
+          </div>
+          <div class="rule-body">
+            <div class="inner-content">
+              <div class="rule-content">
+                Администрация настоятельно рекомендует воздерживаться от финансовых операций с участниками, с которыми вы не знакомы лично. Ответственность за такие действия лежит исключительно на вас.
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="rule-item">
+          <div class="rule-header">
+            <div class="rule-info">
+              <span class="rule-number"></span>
+              <span class="rule-name">Подозрительная активность</span>
+            </div>
+            <svg class="rule-chevron" viewBox="0 0 24 24"><path d="M16.59 8.59L12 13.17 7.41 8.59 6 10l6 6 6-6z"/></svg>
+          </div>
+          <div class="rule-body">
+            <div class="inner-content">
+              <div class="rule-content">
+                Если вы заметили подозрительное поведение участника (спам, фишинг, агрессия и т.д.), немедленно сообщите об этом модератору или администратору чата.
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="admin" class="rules-section fade-in">
+        <h2 class="section-title">
+           <svg viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-5 14H7v-2h7v2zm3-4H7v-2h10v2zm0-4H7V7h10v2z"/></svg>
+          Администрация
+        </h2>
+        <div class="rule-item">
+          <div class="rule-header">
+            <div class="rule-info">
+              <span class="rule-number"></span>
+              <span class="rule-name">Решения администрации</span>
+            </div>
+            <svg class="rule-chevron" viewBox="0 0 24 24"><path d="M16.59 8.59L12 13.17 7.41 8.59 6 10l6 6 6-6z"/></svg>
+          </div>
+          <div class="rule-body">
+            <div class="inner-content">
+              <div class="rule-content">
+                Администрация имеет право принимать решения по спорным ситуациям. Такие решения окончательны и не подлежат обсуждению в публичном чате.
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="rule-item">
+          <div class="rule-header">
+            <div class="rule-info">
+              <span class="rule-number"></span>
+              <span class="rule-name">Система наказаний</span>
+            </div>
+            <svg class="rule-chevron" viewBox="0 0 24 24"><path d="M16.59 8.59L12 13.17 7.41 8.59 6 10l6 6 6-6z"/></svg>
+          </div>
+          <div class="rule-body">
+            <div class="inner-content">
+              <div class="rule-content">
+                В зависимости от тяжести и частоты нарушений, участнику может быть вынесено предупреждение, временно ограничен доступ (мут) или выдано постоянное исключение (бан).
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="rule-item">
+          <div class="rule-header">
+            <div class="rule-info">
+              <span class="rule-number"></span>
+              <span class="rule-name">Удаление сообщений</span>
+            </div>
+            <svg class="rule-chevron" viewBox="0 0 24 24"><path d="M16.59 8.59L12 13.17 7.41 8.59 6 10l6 6 6-6z"/></svg>
+          </div>
+          <div class="rule-body">
+            <div class="inner-content">
+              <div class="rule-content">
+                Сообщения, нарушающие правила чата, могут быть удалены без предварительного уведомления. Участник может быть проинформирован о причине удаления по запросу.
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="extra" class="rules-section fade-in">
+        <h2 class="section-title">
+          <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/></svg>
+          Дополнительно
+        </h2>
+        <div class="rule-item">
+          <div class="rule-header">
+            <div class="rule-info">
+              <span class="rule-number"></span>
+              <span class="rule-name">Нецензурная лексика</span>
+            </div>
+            <svg class="rule-chevron" viewBox="0 0 24 24"><path d="M16.59 8.59L12 13.17 7.41 8.59 6 10l6 6 6-6z"/></svg>
+          </div>
+          <div class="rule-body">
+            <div class="inner-content">
+              <div class="rule-content">
+                Неформальное общение допускает редкое и уместное использование мата исключительно в ироничном или юмористическом контексте. Злоупотребление недопустимо.
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="rule-item">
+          <div class="rule-header">
+            <div class="rule-info">
+              <span class="rule-number"></span>
+              <span class="rule-name">NSFW контент <span class="sub-tag danger">Strict</span></span>
+            </div>
+            <svg class="rule-chevron" viewBox="0 0 24 24"><path d="M16.59 8.59L12 13.17 7.41 8.59 6 10l6 6 6-6z"/></svg>
+          </div>
+          <div class="rule-body">
+            <div class="inner-content">
+              <div class="rule-content">
+                Публикация контента для взрослых (NSFW), включая откровенные изображения, интимные темы или провокационные материалы, категорически запрещена.
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="rule-item">
+          <div class="rule-header">
+            <div class="rule-info">
+              <span class="rule-number"></span>
+              <span class="rule-name">Обесценивание труда</span>
+            </div>
+            <svg class="rule-chevron" viewBox="0 0 24 24"><path d="M16.59 8.59L12 13.17 7.41 8.59 6 10l6 6 6-6z"/></svg>
+          </div>
+          <div class="rule-body">
+            <div class="inner-content">
+              <div class="rule-content">
+                Критика должна быть конструктивной. Запрещено высмеивать, принижать или оскорблять творческие, интеллектуальные или иные достижения участников.
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="rule-item">
+          <div class="rule-header">
+            <div class="rule-info">
+              <span class="rule-number"></span>
+              <span class="rule-name">Упоминание «Тэлиота» <span class="sub-tag danger">Permaban</span></span>
+            </div>
+            <svg class="rule-chevron" viewBox="0 0 24 24"><path d="M16.59 8.59L12 13.17 7.41 8.59 6 10l6 6 6-6z"/></svg>
+          </div>
+          <div class="rule-body">
+            <div class="inner-content">
+              <div class="rule-content">
+                Знакомы с тэлиотом? Или упомяните его в ЧАТЕ — Вы будете забанены.
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="rule-item">
+          <div class="rule-header">
+            <div class="rule-info">
+              <span class="rule-number"></span>
+              <span class="rule-name">Бан без причины</span>
+            </div>
+            <svg class="rule-chevron" viewBox="0 0 24 24"><path d="M16.59 8.59L12 13.17 7.41 8.59 6 10l6 6 6-6z"/></svg>
+          </div>
+          <div class="rule-body">
+            <div class="inner-content">
+              <div class="rule-content">
+                В исключительных случаях (например, угроза безопасности чата) администратор может ограничить доступ участника без публичного обоснования.
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="rule-item">
+          <div class="rule-header">
+            <div class="rule-info">
+              <span class="rule-number"></span>
+              <span class="rule-name">Боты и автоматизация</span>
+            </div>
+            <svg class="rule-chevron" viewBox="0 0 24 24"><path d="M16.59 8.59L12 13.17 7.41 8.59 6 10l6 6 6-6z"/></svg>
+          </div>
+          <div class="rule-body">
+            <div class="inner-content">
+              <div class="rule-content">
+                Автоматическая отправка сообщений через сторонние скрипты, ботов или макросы запрещена и приведёт к блокировке аккаунта.
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="rule-item">
+          <div class="rule-header">
+            <div class="rule-info">
+              <span class="rule-number"></span>
+              <span class="rule-name">Твинки (мультиаккаунт)</span>
+            </div>
+            <svg class="rule-chevron" viewBox="0 0 24 24"><path d="M16.59 8.59L12 13.17 7.41 8.59 6 10l6 6 6-6z"/></svg>
+          </div>
+          <div class="rule-body">
+            <div class="inner-content">
+              <div class="rule-content">
+                Участнику разрешён только один аккаунт в чате. Использование нескольких аккаунтов для обхода ограничений или манипуляций карается баном всех связанных профилей.
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="rule-item">
+          <div class="rule-header">
+            <div class="rule-info">
+              <span class="rule-number"></span>
+              <span class="rule-name">Упоминание родителей</span>
+            </div>
+            <svg class="rule-chevron" viewBox="0 0 24 24"><path d="M16.59 8.59L12 13.17 7.41 8.59 6 10l6 6 6-6z"/></svg>
+          </div>
+          <div class="rule-body">
+            <div class="inner-content">
+              <div class="rule-content">
+                Обсуждение семейных обстоятельств, родителей или личной жизни других участников недопустимо и нарушает границы приватности.
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="rule-item">
+          <div class="rule-header">
+            <div class="rule-info">
+              <span class="rule-number"></span>
+              <span class="rule-name">Оспаривание правил</span>
+            </div>
+            <svg class="rule-chevron" viewBox="0 0 24 24"><path d="M16.59 8.59L12 13.17 7.41 8.59 6 10l6 6 6-6z"/></svg>
+          </div>
+          <div class="rule-body">
+            <div class="inner-content">
+              <div class="rule-content">
+                Правила устанавливаются администрацией и не подлежат публичному оспариванию. Попытки формально «обойти» правила или вступить в спор по их поводу расцениваются как деструктивное поведение.
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="rule-item">
+          <div class="rule-header">
+            <div class="rule-info">
+              <span class="rule-number"></span>
+              <span class="rule-name">Шиппинг без согласия</span>
+            </div>
+            <svg class="rule-chevron" viewBox="0 0 24 24"><path d="M16.59 8.59L12 13.17 7.41 8.59 6 10l6 6 6-6z"/></svg>
+          </div>
+          <div class="rule-body">
+            <div class="inner-content">
+              <div class="rule-content">
+                Обсуждение или навязывание романтических/эротических отношений между участниками («шиппинг») без их явного согласия запрещено и считается нарушением личных границ.
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="sanctions" class="rules-section fade-in">
+        <h2 class="section-title">
+          <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"/></svg>
+          Санкции
+        </h2>
+        <div class="rule-item">
+          <div class="rule-header">
+            <div class="rule-info">
+              <span class="rule-number"></span>
+              <span class="rule-name">Градация наказаний</span>
+            </div>
+            <svg class="rule-chevron" viewBox="0 0 24 24"><path d="M16.59 8.59L12 13.17 7.41 8.59 6 10l6 6 6-6z"/></svg>
+          </div>
+          <div class="rule-body">
+            <div class="inner-content">
+              <div class="rule-content">
+                • <strong>Первое нарушение:</strong> устное или письменное предупреждение.<br>
+                • <strong>Второе нарушение:</strong> мут (ограничение чата) на 24 часа.<br>
+                • <strong>Третье нарушение:</strong> постоянный бан без возможности восстановления.<br><br>
+                <span style="color: var(--danger);">За особо тяжкие нарушения (угрозы, мошенничество, NSFW) — немедленный бан без предупреждений.</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+    </main>
+    
+    <div id="noResults" class="no-results">
+        Ничего не найдено. Попробуйте другой запрос.
+    </div>
+  </div>
+
+  <script>
+    // Accordion Logic
+    document.querySelectorAll('.rule-header').forEach(header => {
+      header.addEventListener('click', () => {
+        const currentItem = header.parentElement;
+        const isActive = currentItem.classList.contains('active');
+        
+        // Optional: Close others
+        // document.querySelectorAll('.rule-item').forEach(el => {
+        //    if (el !== currentItem) el.classList.remove('active');
+        // });
+        
+        currentItem.classList.toggle('active');
+      });
+    });
+
+    // Chip Navigation
+    document.querySelectorAll('.chip').forEach(anchor => {
+        anchor.addEventListener('click', function (e) {
+            e.preventDefault();
+            document.querySelectorAll('.chip').forEach(c => c.classList.remove('active'));
+            this.classList.add('active');
+            
+            const target = document.querySelector(this.getAttribute('href'));
+            const offset = 180; // height of fixed header + margin
+            const elementPosition = target.getBoundingClientRect().top;
+            const offsetPosition = elementPosition + window.pageYOffset - offset;
+
+            window.scrollTo({
+                top: offsetPosition,
+                behavior: "smooth"
+            });
+        });
+    });
+
+    // Search Logic (Urliui Feature)
+    const searchInput = document.getElementById('ruleSearch');
+    const ruleItems = document.querySelectorAll('.rule-item');
+    const sections = document.querySelectorAll('.rules-section');
+    const noResults = document.getElementById('noResults');
+
+    searchInput.addEventListener('input', (e) => {
+        const term = e.target.value.toLowerCase();
+        let foundAny = false;
+
+        sections.forEach(section => {
+            let sectionHasMatch = false;
+            const items = section.querySelectorAll('.rule-item');
+            
+            items.forEach(item => {
+                const text = item.innerText.toLowerCase();
+                if (text.includes(term)) {
+                    item.style.display = 'block';
+                    sectionHasMatch = true;
+                    foundAny = true;
+                    // Auto-expand if searching
+                    if(term.length > 2) item.classList.add('active');
+                } else {
+                    item.style.display = 'none';
+                    item.classList.remove('active');
+                }
+            });
+
+            if (sectionHasMatch) {
+                section.style.display = 'block';
+            } else {
+                section.style.display = 'none';
+            }
+        });
+
+        if (!foundAny) {
+            noResults.style.display = 'block';
+        } else {
+            noResults.style.display = 'none';
+        }
+    });
+
+    // Particles
+    tsParticles.load("tsparticles", {
+      fpsLimit: 60,
+      particles: {
+        number: { value: 30, density: { enable: true, area: 800 } },
+        color: { value: "#6c5ce7" },
+        opacity: { value: 0.15 },
+        size: { value: { min: 1, max: 2 } },
+        links: { enable: true, distance: 150, color: "#6c5ce7", opacity: 0.1, width: 1 },
+        move: { enable: true, speed: 0.5, direction: "none", random: true }
+      },
+      detectRetina: true
+    });
+  </script>
+</body>
+  </html>
